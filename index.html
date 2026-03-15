@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mirror.ai</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0F;--surface:#12121A;--surface2:#1A1A26;
+  --border:rgba(255,255,255,0.07);--accent:#7C5CFC;--accent2:#FC5C9C;
+  --accent3:#5CF4FC;--accent4:#FCDB5C;--text:#F0EEF8;--muted:#7A7890;
+  --green:#5CF4A0;--font-head:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body)}
+.layout{display:flex;height:100vh;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:240px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:24px 0;overflow-y:auto}
+.logo{display:flex;align-items:center;gap:10px;padding:0 20px 28px}
+.logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-name{font-family:var(--font-head);font-size:18px;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-section{padding:0 12px;margin-bottom:8px}
+.nav-label{font-size:10px;font-weight:600;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;padding:6px 10px 10px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);transition:all .18s;text-decoration:none;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:rgba(124,92,252,.15);color:var(--accent)}
+.nav-item .icon{width:18px;font-size:15px;text-align:center}
+.sidebar-footer{margin-top:auto;padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.avatar-sm{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.sidebar-user-name{font-size:13px;font-weight:600}
+.sidebar-user-sub{font-size:11px;color:var(--muted)}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:10}
+.topbar-title{font-family:var(--font-head);font-size:22px;font-weight:800}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.badge-beta{background:rgba(124,92,252,.18);color:var(--accent);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;border:1px solid rgba(124,92,252,.3)}
+.btn-primary{background:var(--text);color:var(--bg);border:none;padding:9px 18px;border-radius:10px;font-family:var(--font-head);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .15s}
+.btn-primary:hover{opacity:.88}
+.content{padding:28px 32px;flex:1}
+
+/* PAGE TRANSITIONS */
+.page{display:none;animation:fadeUp .35s ease both}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── DASHBOARD ── */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:-30px;right:-30px;width:80px;height:80px;border-radius:50%;background:var(--glow-color,rgba(124,92,252,.08))}
+.stat-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
+.stat-value{font-family:var(--font-head);font-size:32px;font-weight:800;line-height:1;margin-bottom:6px}
+.stat-sub{font-size:11px;color:var(--muted)}
+.stat-sub span{color:var(--green);font-weight:600}
+.mid-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:16px;margin-bottom:24px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px}
+.panel-title{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:20px}
+.trait-row{margin-bottom:16px}
+.trait-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.trait-name{font-size:13px;font-weight:600}
+.trait-pct{font-size:13px;font-weight:700}
+.trait-bar-bg{height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.trait-bar{height:100%;border-radius:99px;animation:barGrow 1s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes barGrow{from{width:0}}
+.avatar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.avatar-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .18s}
+.avatar-card:hover{border-color:rgba(124,92,252,.4);transform:translateY(-2px)}
+.avatar-card.selected{border-color:var(--accent);background:rgba(124,92,252,.1)}
+.avatar-emoji{font-size:32px;margin-bottom:8px}
+.avatar-name{font-family:var(--font-head);font-size:12px;font-weight:700;margin-bottom:2px}
+.avatar-desc{font-size:10px;color:var(--muted)}
+.recent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.recent-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .18s}
+.recent-card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-2px)}
+.recent-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.recent-icon{font-size:22px}
+.recent-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+.badge-quiz{background:rgba(124,92,252,.18);color:var(--accent)}
+.badge-text{background:rgba(92,244,252,.15);color:var(--accent3)}
+.badge-quick{background:rgba(252,92,156,.15);color:var(--accent2)}
+.recent-title{font-family:var(--font-head);font-size:14px;font-weight:700;margin-bottom:4px}
+.recent-meta{font-size:11px;color:var(--muted)}
+
+/* ── QUIZ ── */
+.quiz-content{padding:40px 32px;flex:1;max-width:740px;margin:0 auto;width:100%}
+.progress-wrap{margin-bottom:36px}
+.progress-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:10px}
+.progress-bar-bg{height:4px;background:rgba(255,255,255,.07);border-radius:99px}
+.progress-bar{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .5s ease}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px;margin-bottom:20px}
+.q-number{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:14px}
+.q-text{font-family:var(--font-head);font-size:22px;font-weight:700;line-height:1.45;margin-bottom:32px}
+.scale-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:12px}
+.scale-row{display:flex;gap:10px;justify-content:center}
+.scale-btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--border);background:var(--surface2);color:var(--muted);font-family:var(--font-head);font-size:15px;font-weight:700;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center}
+.scale-btn:hover{border-color:var(--accent);color:var(--accent);transform:scale(1.1)}
+.scale-btn.selected{border-color:var(--accent);background:rgba(124,92,252,.2);color:var(--text);transform:scale(1.15)}
+.q-nav{display:flex;justify-content:space-between;align-items:center}
+.btn-ghost{background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:10px 22px;border-radius:10px;font-family:var(--font-head);font-weight:600;font-size:13px;cursor:pointer;transition:all .15s}
+.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.btn-next{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:white;padding:11px 28px;border-radius:10px;font-family:var(--font-head);font-weight:700;font-size:13px;cursor:pointer;transition:opacity .15s}
+.btn-next:hover{opacity:.88}
+.trait-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.trait-chip{font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid var(--border);color:var(--muted)}
+.trait-chip.active{background:rgba(124,92,252,.15);border-color:rgba(124,92,252,.4);color:var(--accent)}
+
+/* ── UPLOAD ── */
+.upload-content{padding:40px 32px;max-width:720px;margin:0 auto}
+.upload-intro{margin-bottom:32px}
+.upload-intro h2{font-family:var(--font-head);font-size:28px;font-weight:800;margin-bottom:10px}
+.upload-intro p{font-size:14px;color:var(--muted);line-height:1.7}
+.type-tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.type-tab{padding:10px 20px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.type-tab.active{border-color:rgba(124,92,252,.5);background:rgba(124,92,252,.12);color:var(--accent)}
+.drop-zone{border:2px dashed rgba(124,92,252,.3);border-radius:18px;padding:60px 40px;text-align:center;margin-bottom:20px;background:rgba(124,92,252,.04);cursor:pointer;transition:all .2s}
+.drop-zone:hover{border-color:rgba(124,92,252,.6);background:rgba(124,92,252,.08)}
+.drop-icon{font-size:40px;margin-bottom:16px}
+.drop-title{font-family:var(--font-head);font-size:17px;font-weight:700;margin-bottom:6px}
+.drop-sub{font-size:13px;color:var(--muted)}
+.divider{display:flex;align-items:center;gap:16px;margin:20px 0;color:var(--muted);font-size:12px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.text-area{width:100%;min-height:180px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;color:var(--text);font-family:var(--font-body);font-size:14px;resize:vertical;outline:none;line-height:1.7;transition:border-color .15s}
+.text-area:focus{border-color:rgba(124,92,252,.5)}
+.text-area::placeholder{color:var(--muted)}
+.char-count{text-align:right;font-size:11px;color:var(--muted);margin-top:6px;margin-bottom:24px}
+.tips-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.tip{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px}
+.tip-icon{font-size:18px;margin-bottom:6px}
+.tip-text{font-size:11px;color:var(--muted);line-height:1.6}
+.btn-analyse{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:white;padding:14px;border-radius:12px;font-family:var(--font-head);font-weight:700;font-size:15px;cursor:pointer;transition:opacity .15s}
+.btn-analyse:hover{opacity:.88}
+
+/* ── PROFILE ── */
+.hero-card{border-radius:20px;padding:40px;margin-bottom:24px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1A1230 0%,#0F0F1A 60%,#1A1020 100%);border:1px solid rgba(124,92,252,.2)}
+.hero-card::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,252,.18),transparent 70%)}
+.hero-card::after{content:'';position:absolute;bottom:-40px;left:40%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(252,92,156,.12),transparent 70%)}
+.hero-inner{position:relative;z-index:1;display:flex;align-items:center;gap:32px}
+.hero-avatar{font-size:72px;line-height:1}
+.hero-type{font-family:var(--font-head);font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:4px}
+.hero-label{font-size:16px;color:var(--muted);font-weight:500;margin-bottom:16px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap}
+.hero-tag{font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:var(--muted)}
+.insights-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.insight-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px}
+.insight-icon{font-size:26px;margin-bottom:12px}
+.insight-title{font-family:var(--font-head);font-size:14px;font-weight:700;margin-bottom:6px}
+.insight-text{font-size:12px;color:var(--muted);line-height:1.7}
+.traits-panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px}
+.trait-row-p{margin-bottom:20px;display:grid;grid-template-columns:160px 1fr 48px;align-items:center;gap:16px}
+
+/* ── HISTORY ── */
+.filter-row{display:flex;gap:10px;margin-bottom:24px;align-items:center;flex-wrap:wrap}
+.filter-btn{padding:8px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
+.filter-btn.active{border-color:rgba(124,92,252,.5);background:rgba(124,92,252,.12);color:var(--accent)}
+.search-box{margin-left:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 16px;color:var(--text);font-size:13px;font-family:var(--font-body);outline:none;width:220px}
+.search-box::placeholder{color:var(--muted)}
+.timeline{display:flex;flex-direction:column;gap:12px}
+.h-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:20px;cursor:pointer;transition:all .18s}
+.h-card:hover{border-color:rgba(255,255,255,.12);transform:translateX(4px)}
+.h-icon-wrap{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.h-quiz{background:rgba(124,92,252,.15)}
+.h-upload{background:rgba(92,244,252,.1)}
+.h-quick{background:rgba(252,92,156,.12)}
+.h-title{font-family:var(--font-head);font-size:14px;font-weight:700;margin-bottom:4px}
+.h-meta{font-size:12px;color:var(--muted)}
+.h-result{text-align:right}
+.h-type{font-family:var(--font-head);font-size:18px;font-weight:800;margin-bottom:3px}
+.h-score{font-size:11px;color:var(--muted)}
+.h-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;margin-bottom:6px}
+.badge-quiz-h{background:rgba(124,92,252,.18);color:var(--accent)}
+.badge-text-h{background:rgba(92,244,252,.15);color:var(--accent3)}
+.badge-quick-h{background:rgba(252,92,156,.15);color:var(--accent2)}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">🪞</div>
+      <span class="logo-name">Mirror.ai</span>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Overview</div>
+      <button class="nav-item active" data-page="dashboard"><span class="icon">⬡</span> Dashboard</button>
+      <button class="nav-item" data-page="quiz"><span class="icon">✦</span> Take Quiz</button>
+      <button class="nav-item" data-page="upload"><span class="icon">↑</span> Upload Text</button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Results</div>
+      <button class="nav-item" data-page="profile"><span class="icon">◈</span> My Profile</button>
+      <button class="nav-item" data-page="history"><span class="icon">◷</span> History</button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Explore</div>
+      <button class="nav-item" data-page="coming"><span class="icon">✳</span> Compatibility</button>
+      <button class="nav-item" data-page="coming"><span class="icon">△</span> AI Insights</button>
+    </div>
+    <div class="sidebar-footer">
+      <div class="avatar-sm">A</div>
+      <div>
+        <div class="sidebar-user-name">Alex Chen</div>
+        <div class="sidebar-user-sub">INFJ · Explorer</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+
+    <!-- ══════════ DASHBOARD ══════════ -->
+    <div class="page active" id="page-dashboard">
+      <div class="topbar">
+        <span class="topbar-title">Dashboard</span>
+        <div class="topbar-right">
+          <span class="badge-beta">Beta</span>
+          <button class="btn-primary" onclick="navigate('quiz')">New Analysis ✦</button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="stat-row">
+          <div class="stat-card" style="--glow-color:rgba(124,92,252,.12)">
+            <div class="stat-label">Analyses Done</div>
+            <div class="stat-value" style="color:var(--accent)">12</div>
+            <div class="stat-sub"><span>↑ 3 this week</span></div>
+          </div>
+          <div class="stat-card" style="--glow-color:rgba(252,92,156,.12)">
+            <div class="stat-label">Dominant Trait</div>
+            <div class="stat-value" style="color:var(--accent2)">Openness</div>
+            <div class="stat-sub">84% score</div>
+          </div>
+          <div class="stat-card" style="--glow-color:rgba(92,244,252,.1)">
+            <div class="stat-label">Personality Type</div>
+            <div class="stat-value" style="color:var(--accent3)">INFJ</div>
+            <div class="stat-sub">Advocate</div>
+          </div>
+          <div class="stat-card" style="--glow-color:rgba(252,219,92,.1)">
+            <div class="stat-label">Consistency</div>
+            <div class="stat-value" style="color:var(--accent4)">91%</div>
+            <div class="stat-sub"><span style="color:var(--green)">Stable profile</span></div>
+          </div>
+        </div>
+        <div class="mid-grid">
+          <div class="panel">
+            <div class="panel-title">Big Five Snapshot</div>
+            <div class="trait-row">
+              <div class="trait-header"><span class="trait-name">Openness</span><span class="trait-pct" style="color:var(--accent)">84%</span></div>
+              <div class="trait-bar-bg"><div class="trait-bar" style="width:84%;background:var(--accent)"></div></div>
+            </div>
+            <div class="trait-row">
+              <div class="trait-header"><span class="trait-name">Conscientiousness</span><span class="trait-pct" style="color:var(--accent2)">71%</span></div>
+              <div class="trait-bar-bg"><div class="trait-bar" style="width:71%;background:var(--accent2)"></div></div>
+            </div>
+            <div class="trait-row">
+              <div class="trait-header"><span class="trait-name">Extraversion</span><span class="trait-pct" style="color:var(--green)">38%</span></div>
+              <div class="trait-bar-bg"><div class="trait-bar" style="width:38%;background:var(--green)"></div></div>
+            </div>
+            <div class="trait-row">
+              <div class="trait-header"><span class="trait-name">Agreeableness</span><span class="trait-pct" style="color:var(--accent4)">79%</span></div>
+              <div class="trait-bar-bg"><div class="trait-bar" style="width:79%;background:var(--accent4)"></div></div>
+            </div>
+            <div class="trait-row">
+              <div class="trait-header"><span class="trait-name">Neuroticism</span><span class="trait-pct" style="color:var(--accent3)">45%</span></div>
+              <div class="trait-bar-bg"><div class="trait-bar" style="width:45%;background:var(--accent3)"></div></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Choose Your Avatar</div>
+            <div class="avatar-grid">
+              <div class="avatar-card selected" onclick="selectAvatar(this)"><div class="avatar-emoji">🦉</div><div class="avatar-name">The Sage</div><div class="avatar-desc">Wise · Deep</div></div>
+              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">🦋</div><div class="avatar-name">The Dreamer</div><div class="avatar-desc">Creative · Free</div></div>
+              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">🌊</div><div class="avatar-name">The Flow</div><div class="avatar-desc">Calm · Fluid</div></div>
+              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">🔮</div><div class="avatar-name">The Mystic</div><div class="avatar-desc">Intuitive · Deep</div></div>
+              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">🌿</div><div class="avatar-name">The Nurturer</div><div class="avatar-desc">Kind · Warm</div></div>
+              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">⚡</div><div class="avatar-name">The Spark</div><div class="avatar-desc">Bold · Fast</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Recent Analyses</div>
+          <div class="recent-grid">
+            <div class="recent-card" onclick="navigate('history')">
+              <div class="recent-top"><span class="recent-icon">📋</span><span class="recent-badge badge-quiz">Quiz</span></div>
+              <div class="recent-title">Personality Quiz #12</div>
+              <div class="recent-meta">Today · INFJ · 84% Openness</div>
+            </div>
+            <div class="recent-card" onclick="navigate('history')">
+              <div class="recent-top"><span class="recent-icon">📄</span><span class="recent-badge badge-text">Text Upload</span></div>
+              <div class="recent-title">Journal Entry Analysis</div>
+              <div class="recent-meta">Yesterday · INFP · 79% Agreeableness</div>
+            </div>
+            <div class="recent-card" onclick="navigate('history')">
+              <div class="recent-top"><span class="recent-icon">🎯</span><span class="recent-badge badge-quick">Quick Test</span></div>
+              <div class="recent-title">5-Min Mirror Check</div>
+              <div class="recent-meta">2 days ago · INTJ · 91% Consistency</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ QUIZ ══════════ -->
+    <div class="page" id="page-quiz">
+      <div class="topbar"><span class="topbar-title">Personality Quiz</span></div>
+      <div class="quiz-content">
+        <div class="progress-wrap">
+          <div class="progress-meta"><span id="q-counter">Question 4 of 20</span><span id="q-pct">20% complete</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar" id="progress-bar" style="width:20%"></div></div>
+        </div>
+        <div class="trait-chips">
+          <div class="trait-chip active">Openness</div>
+          <div class="trait-chip">Conscientiousness</div>
+          <div class="trait-chip">Extraversion</div>
+          <div class="trait-chip">Agreeableness</div>
+          <div class="trait-chip">Neuroticism</div>
+        </div>
+        <div class="q-card">
+          <div class="q-number" id="q-number">Question 04 · Openness</div>
+          <div class="q-text" id="q-text">I enjoy exploring new ideas, even when they challenge my existing beliefs.</div>
+          <div class="scale-labels"><span>Strongly Disagree</span><span>Strongly Agree</span></div>
+          <div class="scale-row" id="scale-row">
+            <button class="scale-btn" onclick="selectScale(this)">1</button>
+            <button class="scale-btn" onclick="selectScale(this)">2</button>
+            <button class="scale-btn" onclick="selectScale(this)">3</button>
+            <button class="scale-btn selected" onclick="selectScale(this)">4</button>
+            <button class="scale-btn" onclick="selectScale(this)">5</button>
+          </div>
+        </div>
+        <div class="q-nav">
+          <button class="btn-ghost" onclick="prevQ()">← Previous</button>
+          <button class="btn-next" onclick="nextQ()">Next Question →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ UPLOAD ══════════ -->
+    <div class="page" id="page-upload">
+      <div class="topbar"><span class="topbar-title">Upload Text</span></div>
+      <div class="upload-content">
+        <div class="upload-intro">
+          <h2>Let your words reveal you ✦</h2>
+          <p>Paste a journal entry, essay, messages, or any writing sample. Our AI analyses your language patterns to predict personality traits with high accuracy.</p>
+        </div>
+        <div class="type-tabs">
+          <div class="type-tab active" onclick="selectTab(this)">Journal Entry</div>
+          <div class="type-tab" onclick="selectTab(this)">Social Media</div>
+          <div class="type-tab" onclick="selectTab(this)">Essay / Letter</div>
+          <div class="type-tab" onclick="selectTab(this)">Custom</div>
+        </div>
+        <div class="drop-zone">
+          <div class="drop-icon">📂</div>
+          <div class="drop-title">Drop a .txt or .docx file here</div>
+          <div class="drop-sub">or paste directly below</div>
+        </div>
+        <div class="divider">or type / paste text</div>
+        <textarea class="text-area" id="upload-text" oninput="updateChar()" placeholder="Start writing or paste your text here… The more you share, the more accurate the analysis. Aim for at least 200 words."></textarea>
+        <div class="char-count"><span id="char-count">0</span> / 2000 characters</div>
+        <div class="tips-row">
+          <div class="tip"><div class="tip-icon">📝</div><div class="tip-text">Journal entries work best — they're natural and unfiltered</div></div>
+          <div class="tip"><div class="tip-icon">📏</div><div class="tip-text">200+ words gives the AI enough signal for accurate results</div></div>
+          <div class="tip"><div class="tip-icon">🔒</div><div class="tip-text">Your text is never stored or shared — privacy first</div></div>
+        </div>
+        <button class="btn-analyse" onclick="navigate('profile')">Analyse My Personality ✦</button>
+      </div>
+    </div>
+
+    <!-- ══════════ PROFILE ══════════ -->
+    <div class="page" id="page-profile">
+      <div class="topbar">
+        <span class="topbar-title">My Profile</span>
+        <button class="btn-primary">Export PDF ↓</button>
+      </div>
+      <div class="content">
+        <div class="hero-card">
+          <div class="hero-inner">
+            <div class="hero-avatar">🦉</div>
+            <div>
+              <div class="hero-type">INFJ</div>
+              <div class="hero-label">The Advocate · The Sage</div>
+              <div class="hero-tags">
+                <span class="hero-tag">Introvert</span>
+                <span class="hero-tag">Intuitive</span>
+                <span class="hero-tag">Feeling</span>
+                <span class="hero-tag">Judging</span>
+                <span class="hero-tag">Highly Creative</span>
+                <span class="hero-tag">Empathetic</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="insights-grid">
+          <div class="insight-card"><div class="insight-icon">🎯</div><div class="insight-title">Core Strength</div><div class="insight-text">You possess rare insight into human behaviour, often understanding others' motivations before they do.</div></div>
+          <div class="insight-card"><div class="insight-icon">🌱</div><div class="insight-title">Growth Edge</div><div class="insight-text">Learning to set boundaries and prioritise your own needs will unlock sustained energy and creativity.</div></div>
+          <div class="insight-card"><div class="insight-icon">💼</div><div class="insight-title">Career Fit</div><div class="insight-text">Thrives in roles that blend creativity with purpose: counselling, writing, design, teaching, or strategy.</div></div>
+        </div>
+        <div class="traits-panel">
+          <div class="panel-title">Big Five Deep Dive</div>
+          <div class="trait-row-p">
+            <span class="trait-name">Openness</span>
+            <div class="trait-bar-bg"><div class="trait-bar" style="width:84%;background:var(--accent)"></div></div>
+            <span class="trait-pct" style="color:var(--accent)">84%</span>
+          </div>
+          <div class="trait-row-p">
+            <span class="trait-name">Conscientiousness</span>
+            <div class="trait-bar-bg"><div class="trait-bar" style="width:71%;background:var(--accent2)"></div></div>
+            <span class="trait-pct" style="color:var(--accent2)">71%</span>
+          </div>
+          <div class="trait-row-p">
+            <span class="trait-name">Extraversion</span>
+            <div class="trait-bar-bg"><div class="trait-bar" style="width:38%;background:var(--green)"></div></div>
+            <span class="trait-pct" style="color:var(--green)">38%</span>
+          </div>
+          <div class="trait-row-p">
+            <span class="trait-name">Agreeableness</span>
+            <div class="trait-bar-bg"><div class="trait-bar" style="width:79%;background:var(--accent4)"></div></div>
+            <span class="trait-pct" style="color:var(--accent4)">79%</span>
+          </div>
+          <div class="trait-row-p">
+            <span class="trait-name">Neuroticism</span>
+            <div class="trait-bar-bg"><div class="trait-bar" style="width:45%;background:var(--accent3)"></div></div>
+            <span class="trait-pct" style="color:var(--accent3)">45%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ HISTORY ══════════ -->
+    <div class="page" id="page-history">
+      <div class="topbar"><span class="topbar-title">History</span></div>
+      <div class="content">
+        <div class="filter-row">
+          <button class="filter-btn active" onclick="filterHistory(this,'all')">All</button>
+          <button class="filter-btn" onclick="filterHistory(this,'quiz')">Quiz</button>
+          <button class="filter-btn" onclick="filterHistory(this,'upload')">Text Upload</button>
+          <button class="filter-btn" onclick="filterHistory(this,'quick')">Quick Test</button>
+          <input class="search-box" type="text" placeholder="🔍  Search analyses…" oninput="searchHistory(this.value)"/>
+        </div>
+        <div class="timeline" id="timeline">
+          <div class="h-card" data-type="quiz">
+            <div class="h-icon-wrap h-quiz">📋</div>
+            <div><div class="h-badge badge-quiz-h">Quiz</div><div class="h-title">Personality Quiz #12</div><div class="h-meta">Today, 2:14 PM · 20 questions · 8 min</div></div>
+            <div class="h-result"><div class="h-type" style="color:var(--accent)">INFJ</div><div class="h-score">84% Openness</div></div>
+          </div>
+          <div class="h-card" data-type="upload">
+            <div class="h-icon-wrap h-upload">📄</div>
+            <div><div class="h-badge badge-text-h">Text Upload</div><div class="h-title">Journal Entry Analysis</div><div class="h-meta">Yesterday, 9:42 AM · 450 words · journal</div></div>
+            <div class="h-result"><div class="h-type" style="color:var(--accent3)">INFP</div><div class="h-score">79% Agreeableness</div></div>
+          </div>
+          <div class="h-card" data-type="quick">
+            <div class="h-icon-wrap h-quick">🎯</div>
+            <div><div class="h-badge badge-quick-h">Quick Test</div><div class="h-title">5-Min Mirror Check</div><div class="h-meta">2 days ago · 10 questions · 5 min</div></div>
+            <div class="h-result"><div class="h-type" style="color:var(--accent2)">INTJ</div><div class="h-score">91% Consistency</div></div>
+          </div>
+          <div class="h-card" data-type="quiz">
+            <div class="h-icon-wrap h-quiz">📋</div>
+            <div><div class="h-badge badge-quiz-h">Quiz</div><div class="h-title">Personality Quiz #11</div><div class="h-meta">4 days ago · 20 questions · 11 min</div></div>
+            <div class="h-result"><div class="h-type" style="color:var(--accent)">INFJ</div><div class="h-score">81% Openness</div></div>
+          </div>
+          <div class="h-card" data-type="upload">
+            <div class="h-icon-wrap h-upload">📄</div>
+            <div><div class="h-badge badge-text-h">Text Upload</div><div class="h-title">Email Thread Analysis</div><div class="h-meta">1 week ago · 320 words · professional</div></div>
+            <div class="h-result"><div class="h-type" style="color:var(--accent3)">INTJ</div><div class="h-score">76% Conscientiousness</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ COMING SOON ══════════ -->
+    <div class="page" id="page-coming">
+      <div class="topbar"><span class="topbar-title">Coming Soon</span></div>
+      <div class="content" style="display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:16px;text-align:center">
+        <div style="font-size:56px">🚧</div>
+        <div style="font-family:var(--font-head);font-size:26px;font-weight:800">This feature is coming soon</div>
+        <div style="color:var(--muted);font-size:14px">We're building something amazing. Check back soon!</div>
+        <button class="btn-next" style="margin-top:8px" onclick="navigate('dashboard')">← Back to Dashboard</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ── NAVIGATION ──
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('.nav-item[data-page="' + page + '"]').forEach(n => n.classList.add('active'));
+  document.getElementById('main').scrollTo(0, 0);
+}
+
+document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
+  btn.addEventListener('click', () => navigate(btn.dataset.page));
+});
+
+// ── QUIZ ──
+const questions = [
+  {n:'01',trait:'Openness',text:'I find it easy to think of new ideas and creative solutions.'},
+  {n:'02',trait:'Conscientiousness',text:'I always complete tasks on time and in an organised manner.'},
+  {n:'03',trait:'Extraversion',text:'I feel energised after spending time with large groups of people.'},
+  {n:'04',trait:'Openness',text:'I enjoy exploring new ideas, even when they challenge my existing beliefs.'},
+  {n:'05',trait:'Agreeableness',text:'I prioritise others\' needs even when it inconveniences me.'},
+  {n:'06',trait:'Neuroticism',text:'I tend to worry about things that might go wrong in the future.'},
+  {n:'07',trait:'Openness',text:'I enjoy abstract thinking and philosophical discussions.'},
+  {n:'08',trait:'Conscientiousness',text:'I keep my workspace and surroundings tidy and well-organised.'},
+  {n:'09',trait:'Extraversion',text:'I enjoy being the centre of attention at social gatherings.'},
+  {n:'10',trait:'Agreeableness',text:'I believe most people have good intentions at heart.'},
+];
+let currentQ = 3;
+const answers = {};
+
+function renderQ() {
+  const q = questions[currentQ];
+  const total = questions.length;
+  document.getElementById('q-counter').textContent = `Question ${currentQ+1} of ${total}`;
+  document.getElementById('q-pct').textContent = `${Math.round((currentQ+1)/total*100)}% complete`;
+  document.getElementById('progress-bar').style.width = `${(currentQ+1)/total*100}%`;
+  document.getElementById('q-number').textContent = `Question ${q.n} · ${q.trait}`;
+  document.getElementById('q-text').textContent = q.text;
+  const row = document.getElementById('scale-row');
+  row.querySelectorAll('.scale-btn').forEach((btn,i) => {
+    btn.classList.toggle('selected', answers[currentQ] === i+1);
+  });
+  document.querySelectorAll('.trait-chip').forEach(c => {
+    c.classList.toggle('active', c.textContent === q.trait);
+  });
+}
+
+function selectScale(btn) {
+  document.getElementById('scale-row').querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[currentQ] = parseInt(btn.textContent);
+}
+
+function nextQ() {
+  if (currentQ < questions.length - 1) { currentQ++; renderQ(); }
+  else navigate('profile');
+}
+
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQ(); }
+}
+
+// ── UPLOAD ──
+function updateChar() {
+  const v = document.getElementById('upload-text').value;
+  document.getElementById('char-count').textContent = v.length;
+}
+
+function selectTab(el) {
+  el.closest('.type-tabs').querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── AVATAR ──
+function selectAvatar(el) {
+  el.closest('.avatar-grid').querySelectorAll('.avatar-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ── HISTORY FILTER ──
+let activeFilter = 'all';
+function filterHistory(btn, type) {
+  activeFilter = type;
+  btn.closest('.filter-row').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyHistoryFilter();
+}
+
+function searchHistory(val) { applyHistoryFilter(val); }
+
+function applyHistoryFilter(search) {
+  const q = (search || '').toLowerCase();
+  document.querySelectorAll('#timeline .h-card').forEach(card => {
+    const matchType = activeFilter === 'all' || card.dataset.type === activeFilter;
+    const matchSearch = !q || card.textContent.toLowerCase().includes(q);
+    card.style.display = matchType && matchSearch ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
