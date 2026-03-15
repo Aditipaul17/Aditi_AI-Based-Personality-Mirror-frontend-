@@ -46,7 +46,7 @@ cd Aditi_AI-Based_Personality_Mirror-frontend-
 
 Then just open `index.html` in your browser — or visit the live site:
 
-🌐 **https://aditipaul17.github.io/Aditi_AI-Based_Personality_Mirror-frontend-/**
+🌐 **https://aditipaul17.github.io/Aditi_AI-Based-Personality-Mirror-frontend-/**
 
 ---
 
