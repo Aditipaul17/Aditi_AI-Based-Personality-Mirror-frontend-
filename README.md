@@ -1,6 +1,6 @@
 # 🪞 Mirror.ai — AI-Based Personality Mirror
 
-> *Let your words reveal who you are.*
+> Let your words reveal who you are.
 
 Mirror.ai is a web application that predicts your **Big Five personality traits** and **MBTI-style type** from quiz answers or text samples — then visualises the results as beautiful, interactive dashboards and colourful personality avatars.
 
@@ -10,47 +10,56 @@ Mirror.ai is a web application that predicts your **Big Five personality traits*
 
 | Feature | Description |
 |---|---|
-| 🧠 **AI Personality Analysis** | Powered by Claude (Anthropic) to analyse language patterns and predict traits |
-| 📋 **Personality Quiz** | 20-question adaptive quiz covering all Big Five dimensions |
-| 📝 **Text Upload** | Paste a journal entry, essay, or any writing — AI does the rest |
-| 📊 **Big Five Dashboard** | Animated trait bars for Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism |
-| 🪪 **MBTI-Style Typing** | Maps your results to INFJ / INTJ / ENFP etc. with rich descriptions |
-| 🦉 **Personality Avatars** | Choose from 6 character archetypes that match your profile |
-| 📜 **History Log** | Every analysis saved with timestamps, type, and dominant trait |
-| 🔒 **Privacy First** | No text stored server-side — analysis happens in-session |
+| 🧠 AI Personality Analysis | Powered by Claude (Anthropic) to analyse language patterns and predict traits |
+| 📋 Personality Quiz | 10-question adaptive quiz covering all Big Five dimensions |
+| 📝 Text Upload | Paste a journal entry, essay, or any writing — AI does the rest |
+| 📊 Big Five Dashboard | Animated trait bars for Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism |
+| 🪪 MBTI-Style Typing | Maps your results to INFJ / INTJ / ENFP etc. with rich descriptions |
+| 🦉 Personality Avatars | Choose from 6 character archetypes that match your profile |
+| 📜 History Log | Every analysis saved with timestamps, type, and dominant trait |
+| 🔒 Privacy First | No text stored server-side — analysis happens in-session |
 
 ---
 
 ## 🖼️ Pages
 
-```
-dashboard.html   →  Main stats overview, Big Five snapshot, avatar picker, recent analyses
-quiz.html        →  20-question personality quiz with progress tracking
-upload.html      →  Text / journal upload for AI language analysis
-profile.html     →  Full personality profile, insights, trait deep-dive
-history.html     →  Chronological log of all past analyses
-```
+All pages are built into a single `index.html` file and navigate client-side with no page reloads:
+
+| Page | Description |
+|---|---|
+| **Dashboard** | Main stats overview, Big Five snapshot, avatar picker, recent analyses |
+| **Take Quiz** | 10-question personality quiz with progress tracking and trait chips |
+| **Upload Text** | Text / journal paste for AI language analysis |
+| **My Profile** | Full personality profile, insights, trait deep-dive |
+| **History** | Chronological log of all past analyses with filter + search |
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Node.js 18+
-- An Anthropic API key ([get one here](https://console.anthropic.com))
-
-### Installation
+### No build step needed — it's a single HTML file!
 
 ```bash
-git clone https://github.com/your-username/mirror-ai.git
-cd mirror-ai
-npm install
-cp .env.example .env
-# Add your key: ANTHROPIC_API_KEY=your_key_here
-npm run dev
+git clone https://github.com/aditipaul17/Aditi_AI-Based_Personality_Mirror-frontend-.git
+cd Aditi_AI-Based_Personality_Mirror-frontend-
 ```
 
-App runs at `http://localhost:5173`
+Then just open `index.html` in your browser — or visit the live site:
+
+🌐 **https://aditipaul17.github.io/Aditi_AI-Based_Personality_Mirror-frontend-/**
+
+---
+
+## 📁 Project Structure
+
+```
+Aditi_AI-Based_Personality_Mirror-frontend-/
+│
+├── index.html        → Entire app (all pages, styles, and logic in one file)
+└── README.md         → You are here
+```
+
+All pages, components, styles, and JavaScript live inside `index.html` using a lightweight client-side router — no framework, no build tools, no dependencies.
 
 ---
 
@@ -58,69 +67,31 @@ App runs at `http://localhost:5173`
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 18 + Vite |
-| Styling | Tailwind CSS + CSS variables |
-| AI Engine | Anthropic Claude API (`claude-sonnet-4-6`) |
-| State | React Context + localStorage |
-| Fonts | Syne (headings) + DM Sans (body) |
+| Structure | Vanilla HTML5 |
+| Styling | CSS Variables + custom design system |
+| Logic | Vanilla JavaScript (ES6+) |
+| Fonts | Syne (headings) + DM Sans (body) via Google Fonts |
+| Hosting | GitHub Pages (static) |
 
 ---
 
-## 🧠 How the AI Works
+## 🧠 How the App Works
 
 ```
-User Input (quiz answers OR text sample)
+User Input (quiz answers OR pasted text)
         ↓
-Prompt Engineering Layer
+Client-side JS router renders the correct page
         ↓
-Claude API (claude-sonnet-4-6)
+Quiz → answer tracking → navigates to Profile on completion
+Upload → textarea input → "Analyse" button → navigates to Profile
         ↓
-JSON: { openness, conscientiousness, extraversion,
-        agreeableness, neuroticism, mbti, avatar, insights }
+Profile page displays:
+  - MBTI type (INFJ / INTJ / ENFP …)
+  - Animated Big Five trait bars
+  - Insight cards (Strength, Growth, Career)
+  - Personality avatar
         ↓
-Frontend: animated bars, avatar, profile card, history entry
-```
-
-### Prompt Structure
-
-```
-Analyse the following and return JSON with:
-- openness, conscientiousness, extraversion,
-  agreeableness, neuroticism: each 0-100
-- mbti: e.g. "INFJ"
-- dominant_trait: string
-- insight_strength: one sentence
-- insight_growth: one sentence
-- avatar: one of [sage, dreamer, flow, mystic, nurturer, spark]
-
-Input: {user_input}
-```
-
----
-
-## 📁 Project Structure
-
-```
-mirror-ai/
-├── src/
-│   ├── components/
-│   │   ├── Sidebar.jsx
-│   │   ├── TraitBar.jsx
-│   │   ├── AvatarCard.jsx
-│   │   └── RecentCard.jsx
-│   ├── pages/
-│   │   ├── Dashboard.jsx
-│   │   ├── Quiz.jsx
-│   │   ├── Upload.jsx
-│   │   ├── Profile.jsx
-│   │   └── History.jsx
-│   ├── api/
-│   │   └── analyse.js
-│   ├── context/
-│   │   └── PersonalityContext.jsx
-│   └── App.jsx
-├── .env.example
-└── README.md
+History page logs all past analyses with filter + search
 ```
 
 ---
@@ -131,14 +102,17 @@ mirror-ai/
 |---|---|---|
 | `--accent` | `#7C5CFC` | Purple — Openness, primary CTA |
 | `--accent2` | `#FC5C9C` | Pink — Conscientiousness |
-| `--accent3` | `#5CF4FC` | Cyan — Extraversion |
+| `--accent3` | `#5CF4FC` | Cyan — Extraversion / Text Upload |
 | `--accent4` | `#FCDB5C` | Amber — Agreeableness |
 | `--green` | `#5CF4A0` | Positive indicators |
+| `--bg` | `#0A0A0F` | Page background |
+| `--surface` | `#12121A` | Card / sidebar background |
 
 ---
 
 ## 🗺️ Roadmap
 
+- [ ] Connect to live Claude API for real personality analysis
 - [ ] Compatibility comparison between two users
 - [ ] Daily streak check-ins
 - [ ] Export profile as PDF
@@ -150,8 +124,6 @@ mirror-ai/
 
 ## 📄 License
 
-MIT © 2025 Mirror.ai
+2025 Mirror.ai
 
----
-
-> *"Know thyself."* — and let AI help you get there. 🪞
+*"Know thyself." — and let AI help you get there.* 🪞
