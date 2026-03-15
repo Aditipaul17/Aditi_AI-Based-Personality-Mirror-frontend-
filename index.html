@@ -15,8 +15,6 @@
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body)}
 .layout{display:flex;height:100vh;overflow:hidden}
-
-/* SIDEBAR */
 .sidebar{width:240px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:24px 0;overflow-y:auto}
 .logo{display:flex;align-items:center;gap:10px;padding:0 20px 28px}
 .logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:18px}
@@ -28,11 +26,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .nav-item.active{background:rgba(124,92,252,.15);color:var(--accent)}
 .nav-item .icon{width:18px;font-size:15px;text-align:center}
 .sidebar-footer{margin-top:auto;padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.avatar-sm{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.avatar-sm{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0}
 .sidebar-user-name{font-size:13px;font-weight:600}
 .sidebar-user-sub{font-size:11px;color:var(--muted)}
-
-/* MAIN */
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:10}
 .topbar-title{font-family:var(--font-head);font-size:22px;font-weight:800}
@@ -41,30 +37,26 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .btn-primary{background:var(--text);color:var(--bg);border:none;padding:9px 18px;border-radius:10px;font-family:var(--font-head);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .15s}
 .btn-primary:hover{opacity:.88}
 .content{padding:28px 32px;flex:1}
-
-/* PAGE TRANSITIONS */
 .page{display:none;animation:fadeUp .35s ease both}
 .page.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── DASHBOARD ── */
+/* DASHBOARD */
 .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;position:relative;overflow:hidden}
 .stat-card::before{content:'';position:absolute;top:-30px;right:-30px;width:80px;height:80px;border-radius:50%;background:var(--glow-color,rgba(124,92,252,.08))}
 .stat-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
-.stat-value{font-family:var(--font-head);font-size:32px;font-weight:800;line-height:1;margin-bottom:6px}
+.stat-value{font-family:var(--font-head);font-size:32px;font-weight:800;line-height:1;margin-bottom:6px;transition:all .3s}
 .stat-sub{font-size:11px;color:var(--muted)}
-.stat-sub span{color:var(--green);font-weight:600}
 .mid-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:16px;margin-bottom:24px}
 .panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px}
 .panel-title{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:20px}
 .trait-row{margin-bottom:16px}
 .trait-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
 .trait-name{font-size:13px;font-weight:600}
-.trait-pct{font-size:13px;font-weight:700}
+.trait-pct{font-size:13px;font-weight:700;transition:all .4s}
 .trait-bar-bg{height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
-.trait-bar{height:100%;border-radius:99px;animation:barGrow 1s cubic-bezier(.4,0,.2,1) forwards}
-@keyframes barGrow{from{width:0}}
+.trait-bar{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1)}
 .avatar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .avatar-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .18s}
 .avatar-card:hover{border-color:rgba(124,92,252,.4);transform:translateY(-2px)}
@@ -83,16 +75,19 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .badge-quick{background:rgba(252,92,156,.15);color:var(--accent2)}
 .recent-title{font-family:var(--font-head);font-size:14px;font-weight:700;margin-bottom:4px}
 .recent-meta{font-size:11px;color:var(--muted)}
+.avatar-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface);border:1px solid rgba(124,92,252,.4);border-radius:14px;padding:14px 22px;font-size:13px;font-weight:600;color:var(--text);z-index:999;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;pointer-events:none;white-space:nowrap}
+.avatar-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-/* ── QUIZ ── */
-.quiz-content{padding:40px 32px;flex:1;max-width:740px;margin:0 auto;width:100%}
+/* QUIZ */
+.quiz-content{padding:40px 32px;max-width:740px;margin:0 auto;width:100%}
 .progress-wrap{margin-bottom:36px}
 .progress-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:10px}
 .progress-bar-bg{height:4px;background:rgba(255,255,255,.07);border-radius:99px}
 .progress-bar{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .5s ease}
+.quiz-mode-banner{border-radius:12px;padding:12px 18px;margin-bottom:24px;font-size:12px;font-weight:600;background:rgba(124,92,252,.08);border:1px solid rgba(124,92,252,.2);color:var(--accent)}
 .q-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px;margin-bottom:20px}
 .q-number{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:14px}
-.q-text{font-family:var(--font-head);font-size:22px;font-weight:700;line-height:1.45;margin-bottom:32px}
+.q-text{font-family:var(--font-head);font-size:20px;font-weight:700;line-height:1.5;margin-bottom:32px}
 .scale-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:12px}
 .scale-row{display:flex;gap:10px;justify-content:center}
 .scale-btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--border);background:var(--surface2);color:var(--muted);font-family:var(--font-head);font-size:15px;font-weight:700;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center}
@@ -107,22 +102,17 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .trait-chip{font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid var(--border);color:var(--muted)}
 .trait-chip.active{background:rgba(124,92,252,.15);border-color:rgba(124,92,252,.4);color:var(--accent)}
 
-/* ── UPLOAD ── */
+/* AFFIRMATION */
+.affirmation-box{background:linear-gradient(135deg,rgba(124,92,252,.12),rgba(252,92,156,.08));border:1px solid rgba(124,92,252,.25);border-radius:16px;padding:28px;margin-top:24px;text-align:center}
+.affirmation-label{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:10px}
+.affirmation-text{font-family:var(--font-head);font-size:17px;font-weight:700;line-height:1.5;color:var(--text)}
+
+/* JOURNAL */
 .upload-content{padding:40px 32px;max-width:720px;margin:0 auto}
 .upload-intro{margin-bottom:32px}
 .upload-intro h2{font-family:var(--font-head);font-size:28px;font-weight:800;margin-bottom:10px}
 .upload-intro p{font-size:14px;color:var(--muted);line-height:1.7}
-.type-tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
-.type-tab{padding:10px 20px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
-.type-tab.active{border-color:rgba(124,92,252,.5);background:rgba(124,92,252,.12);color:var(--accent)}
-.drop-zone{border:2px dashed rgba(124,92,252,.3);border-radius:18px;padding:60px 40px;text-align:center;margin-bottom:20px;background:rgba(124,92,252,.04);cursor:pointer;transition:all .2s}
-.drop-zone:hover{border-color:rgba(124,92,252,.6);background:rgba(124,92,252,.08)}
-.drop-icon{font-size:40px;margin-bottom:16px}
-.drop-title{font-family:var(--font-head);font-size:17px;font-weight:700;margin-bottom:6px}
-.drop-sub{font-size:13px;color:var(--muted)}
-.divider{display:flex;align-items:center;gap:16px;margin:20px 0;color:var(--muted);font-size:12px}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
-.text-area{width:100%;min-height:180px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;color:var(--text);font-family:var(--font-body);font-size:14px;resize:vertical;outline:none;line-height:1.7;transition:border-color .15s}
+.text-area{width:100%;min-height:220px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;color:var(--text);font-family:var(--font-body);font-size:14px;resize:vertical;outline:none;line-height:1.7;transition:border-color .15s}
 .text-area:focus{border-color:rgba(124,92,252,.5)}
 .text-area::placeholder{color:var(--muted)}
 .char-count{text-align:right;font-size:11px;color:var(--muted);margin-top:6px;margin-bottom:24px}
@@ -130,10 +120,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .tip{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px}
 .tip-icon{font-size:18px;margin-bottom:6px}
 .tip-text{font-size:11px;color:var(--muted);line-height:1.6}
-.btn-analyse{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:white;padding:14px;border-radius:12px;font-family:var(--font-head);font-weight:700;font-size:15px;cursor:pointer;transition:opacity .15s}
+.btn-analyse{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:white;padding:14px;border-radius:12px;font-family:var(--font-head);font-weight:700;font-size:15px;cursor:pointer;transition:opacity .15s;margin-bottom:4px}
 .btn-analyse:hover{opacity:.88}
+.journal-result{background:var(--surface);border:1px solid rgba(124,92,252,.2);border-radius:16px;padding:24px;margin-top:20px;display:none}
+.journal-result.show{display:block;animation:fadeUp .4s ease both}
+.jr-title{font-family:var(--font-head);font-size:14px;font-weight:700;margin-bottom:16px;color:var(--accent)}
 
-/* ── PROFILE ── */
+/* PROFILE */
 .hero-card{border-radius:20px;padding:40px;margin-bottom:24px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1A1230 0%,#0F0F1A 60%,#1A1020 100%);border:1px solid rgba(124,92,252,.2)}
 .hero-card::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,252,.18),transparent 70%)}
 .hero-card::after{content:'';position:absolute;bottom:-40px;left:40%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(252,92,156,.12),transparent 70%)}
@@ -151,7 +144,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .traits-panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px}
 .trait-row-p{margin-bottom:20px;display:grid;grid-template-columns:160px 1fr 48px;align-items:center;gap:16px}
 
-/* ── HISTORY ── */
+/* HISTORY */
 .filter-row{display:flex;gap:10px;margin-bottom:24px;align-items:center;flex-wrap:wrap}
 .filter-btn{padding:8px 16px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
 .filter-btn.active{border-color:rgba(124,92,252,.5);background:rgba(124,92,252,.12);color:var(--accent)}
@@ -162,7 +155,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .h-card:hover{border-color:rgba(255,255,255,.12);transform:translateX(4px)}
 .h-icon-wrap{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .h-quiz{background:rgba(124,92,252,.15)}
-.h-upload{background:rgba(92,244,252,.1)}
+.h-journal{background:rgba(92,244,252,.1)}
 .h-quick{background:rgba(252,92,156,.12)}
 .h-title{font-family:var(--font-head);font-size:14px;font-weight:700;margin-bottom:4px}
 .h-meta{font-size:12px;color:var(--muted)}
@@ -173,22 +166,22 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .badge-quiz-h{background:rgba(124,92,252,.18);color:var(--accent)}
 .badge-text-h{background:rgba(92,244,252,.15);color:var(--accent3)}
 .badge-quick-h{background:rgba(252,92,156,.15);color:var(--accent2)}
+.empty-state{text-align:center;padding:48px 0;color:var(--muted);font-size:14px}
+.empty-state div:first-child{font-size:40px;margin-bottom:12px}
+.section-divider{font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin:32px 0 16px}
 </style>
 </head>
 <body>
 <div class="layout">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="logo">
-      <div class="logo-icon">🪞</div>
-      <span class="logo-name">Mirror.ai</span>
-    </div>
+    <div class="logo"><div class="logo-icon">🪞</div><span class="logo-name">Mirror.ai</span></div>
     <div class="nav-section">
       <div class="nav-label">Overview</div>
       <button class="nav-item active" data-page="dashboard"><span class="icon">⬡</span> Dashboard</button>
       <button class="nav-item" data-page="quiz"><span class="icon">✦</span> Take Quiz</button>
-      <button class="nav-item" data-page="upload"><span class="icon">↑</span> Upload Text</button>
+      <button class="nav-item" data-page="quicktest"><span class="icon">⚡</span> 5-Min Mirror Check</button>
+      <button class="nav-item" data-page="journal"><span class="icon">📓</span> Journal Entry</button>
     </div>
     <div class="nav-section">
       <div class="nav-label">Results</div>
@@ -201,18 +194,17 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
       <button class="nav-item" data-page="coming"><span class="icon">△</span> AI Insights</button>
     </div>
     <div class="sidebar-footer">
-      <div class="avatar-sm">A</div>
+      <div class="avatar-sm" id="sidebar-avatar-icon">🪞</div>
       <div>
         <div class="sidebar-user-name">Alex Chen</div>
-        <div class="sidebar-user-sub">INFJ · Explorer</div>
+        <div class="sidebar-user-sub" id="sidebar-type-sub">Pick an avatar ✦</div>
       </div>
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="main" id="main">
 
-    <!-- ══════════ DASHBOARD ══════════ -->
+    <!-- ══ DASHBOARD ══ -->
     <div class="page active" id="page-dashboard">
       <div class="topbar">
         <span class="topbar-title">Dashboard</span>
@@ -225,251 +217,215 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
         <div class="stat-row">
           <div class="stat-card" style="--glow-color:rgba(124,92,252,.12)">
             <div class="stat-label">Analyses Done</div>
-            <div class="stat-value" style="color:var(--accent)">12</div>
-            <div class="stat-sub"><span>↑ 3 this week</span></div>
+            <div class="stat-value" style="color:var(--accent)" id="stat-analyses">0</div>
+            <div class="stat-sub" id="stat-analyses-sub">Start your first analysis</div>
           </div>
           <div class="stat-card" style="--glow-color:rgba(252,92,156,.12)">
             <div class="stat-label">Dominant Trait</div>
-            <div class="stat-value" style="color:var(--accent2)">Openness</div>
-            <div class="stat-sub">84% score</div>
+            <div class="stat-value" style="color:var(--accent2);font-size:20px" id="stat-dominant">—</div>
+            <div class="stat-sub" id="stat-dominant-sub">pick an avatar below</div>
           </div>
           <div class="stat-card" style="--glow-color:rgba(92,244,252,.1)">
             <div class="stat-label">Personality Type</div>
-            <div class="stat-value" style="color:var(--accent3)">INFJ</div>
-            <div class="stat-sub">Advocate</div>
+            <div class="stat-value" style="color:var(--accent3)" id="stat-type">—</div>
+            <div class="stat-sub" id="stat-type-sub">pick an avatar below</div>
           </div>
           <div class="stat-card" style="--glow-color:rgba(252,219,92,.1)">
             <div class="stat-label">Consistency</div>
-            <div class="stat-value" style="color:var(--accent4)">91%</div>
-            <div class="stat-sub"><span style="color:var(--green)">Stable profile</span></div>
+            <div class="stat-value" style="color:var(--accent4)" id="stat-consistency">—</div>
+            <div class="stat-sub" id="stat-consistency-sub">pick an avatar below</div>
           </div>
         </div>
         <div class="mid-grid">
           <div class="panel">
             <div class="panel-title">Big Five Snapshot</div>
-            <div class="trait-row">
-              <div class="trait-header"><span class="trait-name">Openness</span><span class="trait-pct" style="color:var(--accent)">84%</span></div>
-              <div class="trait-bar-bg"><div class="trait-bar" style="width:84%;background:var(--accent)"></div></div>
-            </div>
-            <div class="trait-row">
-              <div class="trait-header"><span class="trait-name">Conscientiousness</span><span class="trait-pct" style="color:var(--accent2)">71%</span></div>
-              <div class="trait-bar-bg"><div class="trait-bar" style="width:71%;background:var(--accent2)"></div></div>
-            </div>
-            <div class="trait-row">
-              <div class="trait-header"><span class="trait-name">Extraversion</span><span class="trait-pct" style="color:var(--green)">38%</span></div>
-              <div class="trait-bar-bg"><div class="trait-bar" style="width:38%;background:var(--green)"></div></div>
-            </div>
-            <div class="trait-row">
-              <div class="trait-header"><span class="trait-name">Agreeableness</span><span class="trait-pct" style="color:var(--accent4)">79%</span></div>
-              <div class="trait-bar-bg"><div class="trait-bar" style="width:79%;background:var(--accent4)"></div></div>
-            </div>
-            <div class="trait-row">
-              <div class="trait-header"><span class="trait-name">Neuroticism</span><span class="trait-pct" style="color:var(--accent3)">45%</span></div>
-              <div class="trait-bar-bg"><div class="trait-bar" style="width:45%;background:var(--accent3)"></div></div>
-            </div>
+            <div class="trait-row"><div class="trait-header"><span class="trait-name">Openness</span><span class="trait-pct" id="db-open-pct" style="color:var(--accent)">—</span></div><div class="trait-bar-bg"><div class="trait-bar" id="db-open-bar" style="width:0%;background:var(--accent)"></div></div></div>
+            <div class="trait-row"><div class="trait-header"><span class="trait-name">Conscientiousness</span><span class="trait-pct" id="db-con-pct" style="color:var(--accent2)">—</span></div><div class="trait-bar-bg"><div class="trait-bar" id="db-con-bar" style="width:0%;background:var(--accent2)"></div></div></div>
+            <div class="trait-row"><div class="trait-header"><span class="trait-name">Extraversion</span><span class="trait-pct" id="db-ext-pct" style="color:var(--green)">—</span></div><div class="trait-bar-bg"><div class="trait-bar" id="db-ext-bar" style="width:0%;background:var(--green)"></div></div></div>
+            <div class="trait-row"><div class="trait-header"><span class="trait-name">Agreeableness</span><span class="trait-pct" id="db-agr-pct" style="color:var(--accent4)">—</span></div><div class="trait-bar-bg"><div class="trait-bar" id="db-agr-bar" style="width:0%;background:var(--accent4)"></div></div></div>
+            <div class="trait-row"><div class="trait-header"><span class="trait-name">Neuroticism</span><span class="trait-pct" id="db-neu-pct" style="color:var(--accent3)">—</span></div><div class="trait-bar-bg"><div class="trait-bar" id="db-neu-bar" style="width:0%;background:var(--accent3)"></div></div></div>
           </div>
           <div class="panel">
             <div class="panel-title">Choose Your Avatar</div>
             <div class="avatar-grid">
-              <div class="avatar-card selected" onclick="selectAvatar(this)"><div class="avatar-emoji">🦉</div><div class="avatar-name">The Sage</div><div class="avatar-desc">Wise · Deep</div></div>
-              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">🦋</div><div class="avatar-name">The Dreamer</div><div class="avatar-desc">Creative · Free</div></div>
-              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">🌊</div><div class="avatar-name">The Flow</div><div class="avatar-desc">Calm · Fluid</div></div>
-              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">🔮</div><div class="avatar-name">The Mystic</div><div class="avatar-desc">Intuitive · Deep</div></div>
-              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">🌿</div><div class="avatar-name">The Nurturer</div><div class="avatar-desc">Kind · Warm</div></div>
-              <div class="avatar-card" onclick="selectAvatar(this)"><div class="avatar-emoji">⚡</div><div class="avatar-name">The Spark</div><div class="avatar-desc">Bold · Fast</div></div>
+              <div class="avatar-card" data-avatar="sage" onclick="selectAvatar(this)"><div class="avatar-emoji">🦉</div><div class="avatar-name">The Sage</div><div class="avatar-desc">Wise · Deep</div></div>
+              <div class="avatar-card" data-avatar="dreamer" onclick="selectAvatar(this)"><div class="avatar-emoji">🦋</div><div class="avatar-name">The Dreamer</div><div class="avatar-desc">Creative · Free</div></div>
+              <div class="avatar-card" data-avatar="flow" onclick="selectAvatar(this)"><div class="avatar-emoji">🌊</div><div class="avatar-name">The Flow</div><div class="avatar-desc">Calm · Fluid</div></div>
+              <div class="avatar-card" data-avatar="mystic" onclick="selectAvatar(this)"><div class="avatar-emoji">🔮</div><div class="avatar-name">The Mystic</div><div class="avatar-desc">Intuitive · Deep</div></div>
+              <div class="avatar-card" data-avatar="nurturer" onclick="selectAvatar(this)"><div class="avatar-emoji">🌿</div><div class="avatar-name">The Nurturer</div><div class="avatar-desc">Kind · Warm</div></div>
+              <div class="avatar-card" data-avatar="spark" onclick="selectAvatar(this)"><div class="avatar-emoji">⚡</div><div class="avatar-name">The Spark</div><div class="avatar-desc">Bold · Fast</div></div>
             </div>
           </div>
         </div>
         <div class="panel">
           <div class="panel-title">Recent Analyses</div>
-          <div class="recent-grid">
-            <div class="recent-card" onclick="navigate('history')">
-              <div class="recent-top"><span class="recent-icon">📋</span><span class="recent-badge badge-quiz">Quiz</span></div>
-              <div class="recent-title">Personality Quiz #12</div>
-              <div class="recent-meta">Today · INFJ · 84% Openness</div>
-            </div>
-            <div class="recent-card" onclick="navigate('history')">
-              <div class="recent-top"><span class="recent-icon">📄</span><span class="recent-badge badge-text">Text Upload</span></div>
-              <div class="recent-title">Journal Entry Analysis</div>
-              <div class="recent-meta">Yesterday · INFP · 79% Agreeableness</div>
-            </div>
-            <div class="recent-card" onclick="navigate('history')">
-              <div class="recent-top"><span class="recent-icon">🎯</span><span class="recent-badge badge-quick">Quick Test</span></div>
-              <div class="recent-title">5-Min Mirror Check</div>
-              <div class="recent-meta">2 days ago · INTJ · 91% Consistency</div>
-            </div>
+          <div class="recent-grid" id="dash-recent-grid">
+            <div style="color:var(--muted);font-size:13px;grid-column:1/-1;padding:20px 0;text-align:center">No analyses yet — take a quiz, quick check, or write a journal entry ✦</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ══════════ QUIZ ══════════ -->
+    <!-- ══ QUIZ (10 Questions, avatar-targeted) ══ -->
     <div class="page" id="page-quiz">
       <div class="topbar"><span class="topbar-title">Personality Quiz</span></div>
       <div class="quiz-content">
+        <div class="quiz-mode-banner">📋 Full Quiz — 10 questions designed to reveal your true archetype</div>
         <div class="progress-wrap">
-          <div class="progress-meta"><span id="q-counter">Question 4 of 20</span><span id="q-pct">20% complete</span></div>
-          <div class="progress-bar-bg"><div class="progress-bar" id="progress-bar" style="width:20%"></div></div>
+          <div class="progress-meta"><span id="q-counter">Question 1 of 10</span><span id="q-pct">10% complete</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar" id="progress-bar" style="width:10%"></div></div>
         </div>
-        <div class="trait-chips">
-          <div class="trait-chip active">Openness</div>
+        <div class="trait-chips" id="trait-chips-row">
+          <div class="trait-chip">Openness</div>
           <div class="trait-chip">Conscientiousness</div>
           <div class="trait-chip">Extraversion</div>
           <div class="trait-chip">Agreeableness</div>
           <div class="trait-chip">Neuroticism</div>
         </div>
         <div class="q-card">
-          <div class="q-number" id="q-number">Question 04 · Openness</div>
-          <div class="q-text" id="q-text">I enjoy exploring new ideas, even when they challenge my existing beliefs.</div>
+          <div class="q-number" id="q-number">Question 01</div>
+          <div class="q-text" id="q-text">Loading…</div>
           <div class="scale-labels"><span>Strongly Disagree</span><span>Strongly Agree</span></div>
           <div class="scale-row" id="scale-row">
             <button class="scale-btn" onclick="selectScale(this)">1</button>
             <button class="scale-btn" onclick="selectScale(this)">2</button>
             <button class="scale-btn" onclick="selectScale(this)">3</button>
-            <button class="scale-btn selected" onclick="selectScale(this)">4</button>
+            <button class="scale-btn" onclick="selectScale(this)">4</button>
             <button class="scale-btn" onclick="selectScale(this)">5</button>
           </div>
         </div>
         <div class="q-nav">
           <button class="btn-ghost" onclick="prevQ()">← Previous</button>
-          <button class="btn-next" onclick="nextQ()">Next Question →</button>
+          <button class="btn-next" id="q-next-btn" onclick="nextQ()">Next Question →</button>
         </div>
       </div>
     </div>
 
-    <!-- ══════════ UPLOAD ══════════ -->
-    <div class="page" id="page-upload">
-      <div class="topbar"><span class="topbar-title">Upload Text</span></div>
+    <!-- ══ 5-MIN QUICK TEST ══ -->
+    <div class="page" id="page-quicktest">
+      <div class="topbar"><span class="topbar-title">5-Min Mirror Check ⚡</span></div>
+      <div class="quiz-content">
+        <div class="quiz-mode-banner" style="background:rgba(252,92,156,.08);border-color:rgba(252,92,156,.2);color:var(--accent2)">⚡ Quick Check — 5 questions · instant result + personal affirmation</div>
+        <div class="progress-wrap">
+          <div class="progress-meta"><span id="qq-counter">Question 1 of 5</span><span id="qq-pct">20% complete</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar" id="qq-progress-bar" style="width:20%;background:linear-gradient(90deg,var(--accent2),var(--accent))"></div></div>
+        </div>
+        <div class="q-card">
+          <div class="q-number" id="qq-number" style="color:var(--accent2)">Question 01 · Quick Reflection</div>
+          <div class="q-text" id="qq-text">Loading…</div>
+          <div class="scale-labels"><span>Strongly Disagree</span><span>Strongly Agree</span></div>
+          <div class="scale-row" id="qq-scale-row">
+            <button class="scale-btn" onclick="selectQQScale(this)">1</button>
+            <button class="scale-btn" onclick="selectQQScale(this)">2</button>
+            <button class="scale-btn" onclick="selectQQScale(this)">3</button>
+            <button class="scale-btn" onclick="selectQQScale(this)">4</button>
+            <button class="scale-btn" onclick="selectQQScale(this)">5</button>
+          </div>
+        </div>
+        <div class="q-nav">
+          <button class="btn-ghost" onclick="prevQQ()">← Previous</button>
+          <button class="btn-next" id="qq-next-btn" onclick="nextQQ()">Next →</button>
+        </div>
+        <div class="affirmation-box" id="affirmation-box" style="display:none">
+          <div class="affirmation-label">✨ Your Personal Affirmation</div>
+          <div class="affirmation-text" id="affirmation-text"></div>
+          <div style="margin-top:14px;font-size:13px;font-weight:600;color:var(--muted)" id="quick-result-label"></div>
+          <button class="btn-next" style="margin-top:18px;width:100%;padding:13px" onclick="navigate('profile')">See My Full Profile →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ JOURNAL ENTRY ══ -->
+    <div class="page" id="page-journal">
+      <div class="topbar"><span class="topbar-title">Journal Entry</span></div>
       <div class="upload-content">
         <div class="upload-intro">
-          <h2>Let your words reveal you ✦</h2>
-          <p>Paste a journal entry, essay, messages, or any writing sample. Our AI analyses your language patterns to predict personality traits with high accuracy.</p>
+          <h2>Write freely. We listen. ✦</h2>
+          <p>Write today's journal entry in your own words — your day, your thoughts, your feelings. Our AI reads your tone, word choices, and patterns to mirror your personality archetype.</p>
         </div>
-        <div class="type-tabs">
-          <div class="type-tab active" onclick="selectTab(this)">Journal Entry</div>
-          <div class="type-tab" onclick="selectTab(this)">Social Media</div>
-          <div class="type-tab" onclick="selectTab(this)">Essay / Letter</div>
-          <div class="type-tab" onclick="selectTab(this)">Custom</div>
-        </div>
-        <div class="drop-zone">
-          <div class="drop-icon">📂</div>
-          <div class="drop-title">Drop a .txt or .docx file here</div>
-          <div class="drop-sub">or paste directly below</div>
-        </div>
-        <div class="divider">or type / paste text</div>
-        <textarea class="text-area" id="upload-text" oninput="updateChar()" placeholder="Start writing or paste your text here… The more you share, the more accurate the analysis. Aim for at least 200 words."></textarea>
-        <div class="char-count"><span id="char-count">0</span> / 2000 characters</div>
+        <textarea class="text-area" id="journal-text" oninput="updateJournalChar()" placeholder="Dear journal… Write freely about your day, thoughts, feelings, or anything on your mind. The more honest and unfiltered, the more accurate your personality mirror will be. Aim for at least 100 words."></textarea>
+        <div class="char-count"><span id="journal-char-count">0</span> / 2000 characters · <span id="journal-word-count">0</span> words</div>
         <div class="tips-row">
-          <div class="tip"><div class="tip-icon">📝</div><div class="tip-text">Journal entries work best — they're natural and unfiltered</div></div>
-          <div class="tip"><div class="tip-icon">📏</div><div class="tip-text">200+ words gives the AI enough signal for accurate results</div></div>
-          <div class="tip"><div class="tip-icon">🔒</div><div class="tip-text">Your text is never stored or shared — privacy first</div></div>
+          <div class="tip"><div class="tip-icon">💭</div><div class="tip-text">Write about how you felt today — emotions reveal personality most clearly</div></div>
+          <div class="tip"><div class="tip-icon">📏</div><div class="tip-text">100+ words gives enough signal for a meaningful analysis</div></div>
+          <div class="tip"><div class="tip-icon">🔒</div><div class="tip-text">Your writing is never stored or shared — this is your private mirror</div></div>
         </div>
-        <button class="btn-analyse" onclick="navigate('profile')">Analyse My Personality ✦</button>
+        <button class="btn-analyse" onclick="analyseJournal()">Analyse My Journal ✦</button>
+
+        <div class="journal-result" id="journal-result">
+          <div class="jr-title">✦ Journal Analysis Result</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <div style="font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em">Detected Type</div>
+              <div style="font-family:var(--font-head);font-size:28px;font-weight:800;color:var(--accent)" id="jr-type">—</div>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em">Dominant Trait</div>
+              <div style="font-family:var(--font-head);font-size:20px;font-weight:700;color:var(--accent2)" id="jr-trait">—</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px" id="jr-insight">—</div>
+          <button class="btn-analyse" onclick="saveJournalAndGoToProfile()">Save & View Full Profile →</button>
+        </div>
+
+        <div class="section-divider">Past Journal Analyses</div>
+        <div class="timeline" id="journal-history-list">
+          <div class="empty-state"><div>📓</div>No journal entries yet — write your first one above!</div>
+        </div>
       </div>
     </div>
 
-    <!-- ══════════ PROFILE ══════════ -->
+    <!-- ══ PROFILE ══ -->
     <div class="page" id="page-profile">
       <div class="topbar">
         <span class="topbar-title">My Profile</span>
-        <button class="btn-primary">Export PDF ↓</button>
+        <button class="btn-primary" onclick="window.print()">Export PDF ↓</button>
       </div>
       <div class="content">
         <div class="hero-card">
           <div class="hero-inner">
-            <div class="hero-avatar">🦉</div>
+            <div class="hero-avatar" id="profile-emoji">🪞</div>
             <div>
-              <div class="hero-type">INFJ</div>
-              <div class="hero-label">The Advocate · The Sage</div>
-              <div class="hero-tags">
-                <span class="hero-tag">Introvert</span>
-                <span class="hero-tag">Intuitive</span>
-                <span class="hero-tag">Feeling</span>
-                <span class="hero-tag">Judging</span>
-                <span class="hero-tag">Highly Creative</span>
-                <span class="hero-tag">Empathetic</span>
-              </div>
+              <div class="hero-type" id="profile-type">—</div>
+              <div class="hero-label" id="profile-label">Complete a quiz or journal entry to see your type</div>
+              <div class="hero-tags" id="profile-tags"></div>
             </div>
           </div>
         </div>
         <div class="insights-grid">
-          <div class="insight-card"><div class="insight-icon">🎯</div><div class="insight-title">Core Strength</div><div class="insight-text">You possess rare insight into human behaviour, often understanding others' motivations before they do.</div></div>
-          <div class="insight-card"><div class="insight-icon">🌱</div><div class="insight-title">Growth Edge</div><div class="insight-text">Learning to set boundaries and prioritise your own needs will unlock sustained energy and creativity.</div></div>
-          <div class="insight-card"><div class="insight-icon">💼</div><div class="insight-title">Career Fit</div><div class="insight-text">Thrives in roles that blend creativity with purpose: counselling, writing, design, teaching, or strategy.</div></div>
+          <div class="insight-card"><div class="insight-icon">🎯</div><div class="insight-title">Core Strength</div><div class="insight-text" id="profile-strength">Complete an analysis to reveal your strengths.</div></div>
+          <div class="insight-card"><div class="insight-icon">🌱</div><div class="insight-title">Growth Edge</div><div class="insight-text" id="profile-growth">Complete an analysis to reveal your growth areas.</div></div>
+          <div class="insight-card"><div class="insight-icon">💼</div><div class="insight-title">Career Fit</div><div class="insight-text" id="profile-career">Complete an analysis to reveal your career fit.</div></div>
         </div>
         <div class="traits-panel">
           <div class="panel-title">Big Five Deep Dive</div>
-          <div class="trait-row-p">
-            <span class="trait-name">Openness</span>
-            <div class="trait-bar-bg"><div class="trait-bar" style="width:84%;background:var(--accent)"></div></div>
-            <span class="trait-pct" style="color:var(--accent)">84%</span>
-          </div>
-          <div class="trait-row-p">
-            <span class="trait-name">Conscientiousness</span>
-            <div class="trait-bar-bg"><div class="trait-bar" style="width:71%;background:var(--accent2)"></div></div>
-            <span class="trait-pct" style="color:var(--accent2)">71%</span>
-          </div>
-          <div class="trait-row-p">
-            <span class="trait-name">Extraversion</span>
-            <div class="trait-bar-bg"><div class="trait-bar" style="width:38%;background:var(--green)"></div></div>
-            <span class="trait-pct" style="color:var(--green)">38%</span>
-          </div>
-          <div class="trait-row-p">
-            <span class="trait-name">Agreeableness</span>
-            <div class="trait-bar-bg"><div class="trait-bar" style="width:79%;background:var(--accent4)"></div></div>
-            <span class="trait-pct" style="color:var(--accent4)">79%</span>
-          </div>
-          <div class="trait-row-p">
-            <span class="trait-name">Neuroticism</span>
-            <div class="trait-bar-bg"><div class="trait-bar" style="width:45%;background:var(--accent3)"></div></div>
-            <span class="trait-pct" style="color:var(--accent3)">45%</span>
-          </div>
+          <div class="trait-row-p"><span class="trait-name">Openness</span><div class="trait-bar-bg"><div class="trait-bar" id="p-open-bar" style="width:0%;background:var(--accent)"></div></div><span class="trait-pct" id="p-open-pct" style="color:var(--accent)">—</span></div>
+          <div class="trait-row-p"><span class="trait-name">Conscientiousness</span><div class="trait-bar-bg"><div class="trait-bar" id="p-con-bar" style="width:0%;background:var(--accent2)"></div></div><span class="trait-pct" id="p-con-pct" style="color:var(--accent2)">—</span></div>
+          <div class="trait-row-p"><span class="trait-name">Extraversion</span><div class="trait-bar-bg"><div class="trait-bar" id="p-ext-bar" style="width:0%;background:var(--green)"></div></div><span class="trait-pct" id="p-ext-pct" style="color:var(--green)">—</span></div>
+          <div class="trait-row-p"><span class="trait-name">Agreeableness</span><div class="trait-bar-bg"><div class="trait-bar" id="p-agr-bar" style="width:0%;background:var(--accent4)"></div></div><span class="trait-pct" id="p-agr-pct" style="color:var(--accent4)">—</span></div>
+          <div class="trait-row-p"><span class="trait-name">Neuroticism</span><div class="trait-bar-bg"><div class="trait-bar" id="p-neu-bar" style="width:0%;background:var(--accent3)"></div></div><span class="trait-pct" id="p-neu-pct" style="color:var(--accent3)">—</span></div>
         </div>
       </div>
     </div>
 
-    <!-- ══════════ HISTORY ══════════ -->
+    <!-- ══ HISTORY ══ -->
     <div class="page" id="page-history">
       <div class="topbar"><span class="topbar-title">History</span></div>
       <div class="content">
         <div class="filter-row">
           <button class="filter-btn active" onclick="filterHistory(this,'all')">All</button>
           <button class="filter-btn" onclick="filterHistory(this,'quiz')">Quiz</button>
-          <button class="filter-btn" onclick="filterHistory(this,'upload')">Text Upload</button>
+          <button class="filter-btn" onclick="filterHistory(this,'journal')">Journal</button>
           <button class="filter-btn" onclick="filterHistory(this,'quick')">Quick Test</button>
           <input class="search-box" type="text" placeholder="🔍  Search analyses…" oninput="searchHistory(this.value)"/>
         </div>
         <div class="timeline" id="timeline">
-          <div class="h-card" data-type="quiz">
-            <div class="h-icon-wrap h-quiz">📋</div>
-            <div><div class="h-badge badge-quiz-h">Quiz</div><div class="h-title">Personality Quiz #12</div><div class="h-meta">Today, 2:14 PM · 20 questions · 8 min</div></div>
-            <div class="h-result"><div class="h-type" style="color:var(--accent)">INFJ</div><div class="h-score">84% Openness</div></div>
-          </div>
-          <div class="h-card" data-type="upload">
-            <div class="h-icon-wrap h-upload">📄</div>
-            <div><div class="h-badge badge-text-h">Text Upload</div><div class="h-title">Journal Entry Analysis</div><div class="h-meta">Yesterday, 9:42 AM · 450 words · journal</div></div>
-            <div class="h-result"><div class="h-type" style="color:var(--accent3)">INFP</div><div class="h-score">79% Agreeableness</div></div>
-          </div>
-          <div class="h-card" data-type="quick">
-            <div class="h-icon-wrap h-quick">🎯</div>
-            <div><div class="h-badge badge-quick-h">Quick Test</div><div class="h-title">5-Min Mirror Check</div><div class="h-meta">2 days ago · 10 questions · 5 min</div></div>
-            <div class="h-result"><div class="h-type" style="color:var(--accent2)">INTJ</div><div class="h-score">91% Consistency</div></div>
-          </div>
-          <div class="h-card" data-type="quiz">
-            <div class="h-icon-wrap h-quiz">📋</div>
-            <div><div class="h-badge badge-quiz-h">Quiz</div><div class="h-title">Personality Quiz #11</div><div class="h-meta">4 days ago · 20 questions · 11 min</div></div>
-            <div class="h-result"><div class="h-type" style="color:var(--accent)">INFJ</div><div class="h-score">81% Openness</div></div>
-          </div>
-          <div class="h-card" data-type="upload">
-            <div class="h-icon-wrap h-upload">📄</div>
-            <div><div class="h-badge badge-text-h">Text Upload</div><div class="h-title">Email Thread Analysis</div><div class="h-meta">1 week ago · 320 words · professional</div></div>
-            <div class="h-result"><div class="h-type" style="color:var(--accent3)">INTJ</div><div class="h-score">76% Conscientiousness</div></div>
-          </div>
+          <div class="empty-state"><div>◷</div>No analyses yet — start with a quiz, quick check, or journal entry!</div>
         </div>
       </div>
     </div>
 
-    <!-- ══════════ COMING SOON ══════════ -->
+    <!-- ══ COMING SOON ══ -->
     <div class="page" id="page-coming">
       <div class="topbar"><span class="topbar-title">Coming Soon</span></div>
       <div class="content" style="display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:16px;text-align:center">
@@ -482,51 +438,218 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 
   </main>
 </div>
+<div class="avatar-toast" id="avatar-toast"></div>
 
 <script>
-// ── NAVIGATION ──
+// ═══════════════════════════════════
+// AVATAR / PERSONALITY DATA
+// ═══════════════════════════════════
+const AVATARS = {
+  sage:{
+    emoji:'🦉',name:'The Sage',mbti:'INFJ',mbtiLabel:'The Advocate · The Sage',
+    tags:['Introvert','Intuitive','Feeling','Judging','Highly Creative','Empathetic'],
+    dominant:'Openness',dominantPct:84,consistency:91,
+    traits:{openness:84,conscientiousness:71,extraversion:38,agreeableness:79,neuroticism:45},
+    strength:'You possess rare insight into human behaviour, often understanding others\' motivations before they do.',
+    growth:'Learning to set firm boundaries and prioritise your own needs will unlock sustained energy and creativity.',
+    career:'Thrives in roles blending creativity with purpose: counselling, writing, design, teaching, or strategy.',
+    affirmation:'Your wisdom is a gift the world needs. Trust the quiet knowing inside you — it has never been wrong.'
+  },
+  dreamer:{
+    emoji:'🦋',name:'The Dreamer',mbti:'INFP',mbtiLabel:'The Mediator · The Dreamer',
+    tags:['Introvert','Intuitive','Feeling','Perceiving','Imaginative','Idealistic'],
+    dominant:'Openness',dominantPct:91,consistency:78,
+    traits:{openness:91,conscientiousness:52,extraversion:34,agreeableness:82,neuroticism:58},
+    strength:'Your imagination and emotional depth allow you to create meaning and beauty where others see only the ordinary.',
+    growth:'Building consistent routines will help your brilliant ideas become real, tangible things in the world.',
+    career:'Writing, art, music, counselling, UX design — roles where authenticity and creativity lead the way.',
+    affirmation:'Your dreams are not a distraction — they are your compass. Keep imagining the world you want to build.'
+  },
+  flow:{
+    emoji:'🌊',name:'The Flow',mbti:'ISFP',mbtiLabel:'The Adventurer · The Flow',
+    tags:['Introvert','Sensing','Feeling','Perceiving','Adaptable','Grounded'],
+    dominant:'Agreeableness',dominantPct:88,consistency:83,
+    traits:{openness:72,conscientiousness:60,extraversion:45,agreeableness:88,neuroticism:40},
+    strength:'Your calm adaptability and sensory awareness let you thrive in the present moment with effortless grace.',
+    growth:'Expressing your needs and opinions more openly will deepen your relationships and personal fulfilment.',
+    career:'Art, craft, nature-based work, physical therapy, photography, or any role requiring hands-on presence.',
+    affirmation:'You are the calm in every storm. Your presence alone heals — never underestimate that power.'
+  },
+  mystic:{
+    emoji:'🔮',name:'The Mystic',mbti:'INTJ',mbtiLabel:'The Architect · The Mystic',
+    tags:['Introvert','Intuitive','Thinking','Judging','Strategic','Independent'],
+    dominant:'Conscientiousness',dominantPct:89,consistency:95,
+    traits:{openness:80,conscientiousness:89,extraversion:30,agreeableness:55,neuroticism:35},
+    strength:'Your strategic mind and visionary thinking allow you to see complex systems and long-term patterns with rare clarity.',
+    growth:'Allowing space for emotional vulnerability will unlock connections that strategies alone cannot build.',
+    career:'Research, engineering, architecture, strategy, data science — any field requiring deep independent thought.',
+    affirmation:'Your mind is a universe unto itself. The visions you hold are the blueprints of tomorrow.'
+  },
+  nurturer:{
+    emoji:'🌿',name:'The Nurturer',mbti:'ENFJ',mbtiLabel:'The Protagonist · The Nurturer',
+    tags:['Extravert','Intuitive','Feeling','Judging','Warm','Inspiring'],
+    dominant:'Agreeableness',dominantPct:92,consistency:87,
+    traits:{openness:75,conscientiousness:78,extraversion:72,agreeableness:92,neuroticism:42},
+    strength:'Your natural empathy and ability to inspire others makes you a magnetic force for positive change.',
+    growth:'Remembering to nourish yourself as generously as you nourish others is your most important practice.',
+    career:'Teaching, leadership, social work, HR, community organising, healthcare — anywhere people need a champion.',
+    affirmation:'The love you pour into others is never wasted. You are the reason people believe in themselves.'
+  },
+  spark:{
+    emoji:'⚡',name:'The Spark',mbti:'ENTP',mbtiLabel:'The Debater · The Spark',
+    tags:['Extravert','Intuitive','Thinking','Perceiving','Bold','Energetic'],
+    dominant:'Extraversion',dominantPct:86,consistency:80,
+    traits:{openness:88,conscientiousness:48,extraversion:86,agreeableness:60,neuroticism:50},
+    strength:'Your infectious energy and quick wit generate momentum and enthusiasm wherever you go.',
+    growth:'Channelling your many ideas into fewer, deeper commitments will multiply your real-world impact.',
+    career:'Entrepreneurship, marketing, law, innovation consulting, or any fast-moving creative field.',
+    affirmation:'Your spark ignites rooms. Your ideas change minds. The world moves faster because you are in it.'
+  }
+};
+
+// ═══════════════════════════════════
+// QUIZ QUESTIONS (archetype-targeted)
+// ═══════════════════════════════════
+const QUIZ_QUESTIONS = [
+  {n:'01',trait:'Openness',       text:'I regularly seek out new ideas and creative experiences just for the joy of discovery.'},
+  {n:'02',trait:'Conscientiousness',text:'I plan ahead carefully and feel genuinely uncomfortable leaving important things to chance.'},
+  {n:'03',trait:'Extraversion',   text:'Being around people gives me energy — I feel most alive in social, busy settings.'},
+  {n:'04',trait:'Agreeableness',  text:'When I sense someone is struggling, I naturally put their needs before mine.'},
+  {n:'05',trait:'Neuroticism',    text:'My mind often replays conversations or events long after they\'ve passed.'},
+  {n:'06',trait:'Openness',       text:'I\'m drawn to deep philosophical or spiritual questions about life and existence.'},
+  {n:'07',trait:'Conscientiousness',text:'I hold myself to high standards and feel restless when my work falls short of them.'},
+  {n:'08',trait:'Extraversion',   text:'I find it easy to spark conversations with strangers and rarely feel socially awkward.'},
+  {n:'09',trait:'Agreeableness',  text:'I trust that most people are genuinely good at heart, even when they let me down.'},
+  {n:'10',trait:'Neuroticism',    text:'My emotions run deep — I feel both joy and sorrow more intensely than others seem to.'}
+];
+
+// QUICK TEST (5 broad reflective questions)
+const QUICK_QUESTIONS = [
+  {n:'01', text:'When I picture my ideal weekend, it involves quiet solitude or meaningful one-on-one time more than crowds.'},
+  {n:'02', text:'I tend to follow my gut and values over pure logic or rules when making big decisions.'},
+  {n:'03', text:'I feel most fulfilled when I\'m helping, creating, or understanding — not competing or climbing.'},
+  {n:'04', text:'My friends would describe me as someone who thinks deeply before speaking.'},
+  {n:'05', text:'I often sense the mood or tension in a room without anyone saying a word.'}
+];
+
+// ═══════════════════════════════════
+// STATE
+// ═══════════════════════════════════
+let currentAvatar = null;
+let historyLog = [];
+let currentProfile = null;
+let activeFilter = 'all';
+let currentSearch = '';
+
+// ═══════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════
 function navigate(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const target = document.getElementById('page-' + page);
-  if (target) target.classList.add('active');
-  document.querySelectorAll('.nav-item[data-page="' + page + '"]').forEach(n => n.classList.add('active'));
-  document.getElementById('main').scrollTo(0, 0);
+  if (target) { target.classList.remove('active'); void target.offsetWidth; target.classList.add('active'); }
+  document.querySelectorAll(`.nav-item[data-page="${page}"]`).forEach(n => n.classList.add('active'));
+  document.getElementById('main').scrollTo(0,0);
+  if (page === 'quiz') startQuiz();
+  if (page === 'quicktest') startQuickTest();
+  if (page === 'history') renderHistory();
+  if (page === 'profile' && currentProfile) renderProfile(currentProfile);
 }
-
 document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
   btn.addEventListener('click', () => navigate(btn.dataset.page));
 });
 
-// ── QUIZ ──
-const questions = [
-  {n:'01',trait:'Openness',text:'I find it easy to think of new ideas and creative solutions.'},
-  {n:'02',trait:'Conscientiousness',text:'I always complete tasks on time and in an organised manner.'},
-  {n:'03',trait:'Extraversion',text:'I feel energised after spending time with large groups of people.'},
-  {n:'04',trait:'Openness',text:'I enjoy exploring new ideas, even when they challenge my existing beliefs.'},
-  {n:'05',trait:'Agreeableness',text:'I prioritise others\' needs even when it inconveniences me.'},
-  {n:'06',trait:'Neuroticism',text:'I tend to worry about things that might go wrong in the future.'},
-  {n:'07',trait:'Openness',text:'I enjoy abstract thinking and philosophical discussions.'},
-  {n:'08',trait:'Conscientiousness',text:'I keep my workspace and surroundings tidy and well-organised.'},
-  {n:'09',trait:'Extraversion',text:'I enjoy being the centre of attention at social gatherings.'},
-  {n:'10',trait:'Agreeableness',text:'I believe most people have good intentions at heart.'},
-];
-let currentQ = 3;
-const answers = {};
+// ═══════════════════════════════════
+// AVATAR SELECTION → updates everything
+// ═══════════════════════════════════
+function selectAvatar(el) {
+  document.querySelectorAll('.avatar-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const key = el.dataset.avatar;
+  currentAvatar = key;
+  const av = AVATARS[key];
+
+  // Stats
+  popIn('stat-type', av.mbti);
+  popIn('stat-dominant', av.dominant);
+  document.getElementById('stat-dominant-sub').textContent = av.dominantPct + '% score';
+  document.getElementById('stat-type-sub').textContent = av.name;
+  popIn('stat-consistency', av.consistency + '%');
+  document.getElementById('stat-consistency-sub').textContent = 'Profile consistency';
+
+  // Big five bars
+  applyBars(av.traits, 'db');
+
+  // Sidebar
+  document.getElementById('sidebar-avatar-icon').textContent = av.emoji;
+  document.getElementById('sidebar-type-sub').textContent = av.mbti + ' · ' + av.name;
+
+  // Update profile
+  currentProfile = av;
+  renderProfile(av);
+
+  showToast(av.emoji + ' ' + av.name + ' · ' + av.mbti + ' selected!');
+}
+
+function popIn(id, val) {
+  const el = document.getElementById(id);
+  el.style.transition = 'none';
+  el.style.opacity = '0';
+  el.style.transform = 'scale(.8)';
+  requestAnimationFrame(() => {
+    el.textContent = val;
+    requestAnimationFrame(() => {
+      el.style.transition = 'all .35s cubic-bezier(.34,1.56,.64,1)';
+      el.style.opacity = '1';
+      el.style.transform = 'scale(1)';
+    });
+  });
+}
+
+function applyBars(traits, prefix) {
+  const map = {openness:'open',conscientiousness:'con',extraversion:'ext',agreeableness:'agr',neuroticism:'neu'};
+  for (const [k, s] of Object.entries(map)) {
+    const pct = traits[k] || 0;
+    const bar = document.getElementById(prefix+'-'+s+'-bar');
+    const pctEl = document.getElementById(prefix+'-'+s+'-pct');
+    if (bar) bar.style.width = pct + '%';
+    if (pctEl) pctEl.textContent = pct + '%';
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('avatar-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ═══════════════════════════════════
+// FULL QUIZ
+// ═══════════════════════════════════
+let currentQ = 0;
+const quizAnswers = {};
+
+function startQuiz() {
+  currentQ = 0;
+  for (const k in quizAnswers) delete quizAnswers[k];
+  renderQ();
+}
 
 function renderQ() {
-  const q = questions[currentQ];
-  const total = questions.length;
+  const q = QUIZ_QUESTIONS[currentQ];
+  const total = QUIZ_QUESTIONS.length;
   document.getElementById('q-counter').textContent = `Question ${currentQ+1} of ${total}`;
-  document.getElementById('q-pct').textContent = `${Math.round((currentQ+1)/total*100)}% complete`;
-  document.getElementById('progress-bar').style.width = `${(currentQ+1)/total*100}%`;
+  document.getElementById('q-pct').textContent = Math.round((currentQ+1)/total*100) + '% complete';
+  document.getElementById('progress-bar').style.width = ((currentQ+1)/total*100) + '%';
   document.getElementById('q-number').textContent = `Question ${q.n} · ${q.trait}`;
   document.getElementById('q-text').textContent = q.text;
-  const row = document.getElementById('scale-row');
-  row.querySelectorAll('.scale-btn').forEach((btn,i) => {
-    btn.classList.toggle('selected', answers[currentQ] === i+1);
+  document.getElementById('q-next-btn').textContent = currentQ === total-1 ? 'See My Results ✦' : 'Next Question →';
+  document.getElementById('scale-row').querySelectorAll('.scale-btn').forEach((btn,i) => {
+    btn.classList.toggle('selected', quizAnswers[currentQ] === i+1);
   });
-  document.querySelectorAll('.trait-chip').forEach(c => {
+  document.querySelectorAll('#trait-chips-row .trait-chip').forEach(c => {
     c.classList.toggle('active', c.textContent === q.trait);
   });
 }
@@ -534,54 +657,299 @@ function renderQ() {
 function selectScale(btn) {
   document.getElementById('scale-row').querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
-  answers[currentQ] = parseInt(btn.textContent);
+  quizAnswers[currentQ] = parseInt(btn.textContent);
 }
-
 function nextQ() {
-  if (currentQ < questions.length - 1) { currentQ++; renderQ(); }
-  else navigate('profile');
+  if (currentQ < QUIZ_QUESTIONS.length - 1) { currentQ++; renderQ(); }
+  else finishQuiz();
+}
+function prevQ() { if (currentQ > 0) { currentQ--; renderQ(); } }
+
+function finishQuiz() {
+  const scores = {openness:0,conscientiousness:0,extraversion:0,agreeableness:0,neuroticism:0};
+  const counts = {openness:0,conscientiousness:0,extraversion:0,agreeableness:0,neuroticism:0};
+  QUIZ_QUESTIONS.forEach((q, i) => {
+    const key = q.trait.toLowerCase();
+    scores[key] += (quizAnswers[i] || 3) * 20;
+    counts[key]++;
+  });
+  for (const k in scores) if (counts[k]) scores[k] = Math.round(scores[k] / counts[k]);
+  const matched = matchAvatar(scores);
+  const av = AVATARS[matched];
+  const merged = {};
+  for (const k in av.traits) merged[k] = Math.round((av.traits[k] + (scores[k]||50)) / 2);
+  const result = {...av, traits: merged};
+  currentProfile = result;
+  currentAvatar = matched;
+  document.querySelectorAll('.avatar-card').forEach(c => c.classList.toggle('selected', c.dataset.avatar === matched));
+  document.getElementById('sidebar-avatar-icon').textContent = av.emoji;
+  document.getElementById('sidebar-type-sub').textContent = av.mbti + ' · ' + av.name;
+  applyBars(merged, 'db');
+  popIn('stat-type', av.mbti);
+  popIn('stat-dominant', av.dominant);
+  document.getElementById('stat-dominant-sub').textContent = (merged[av.dominant.toLowerCase()]||av.dominantPct) + '% score';
+  popIn('stat-consistency', av.consistency + '%');
+  document.getElementById('stat-consistency-sub').textContent = 'Profile consistency';
+  addToHistory({
+    type:'quiz', icon:'📋', badgeClass:'badge-quiz-h', badgeLabel:'Quiz',
+    title:'Personality Quiz #' + (historyLog.length+1),
+    meta: nowTime() + ' · 10 questions · ' + av.name,
+    mbti: av.mbti, trait: av.dominant, traitPct: merged[av.dominant.toLowerCase()]||av.dominantPct
+  });
+  renderProfile(result);
+  navigate('profile');
 }
 
-function prevQ() {
-  if (currentQ > 0) { currentQ--; renderQ(); }
+function matchAvatar(scores) {
+  let best = 'sage', bestScore = -Infinity;
+  for (const [key, av] of Object.entries(AVATARS)) {
+    let s = 0;
+    for (const t in av.traits) s += 100 - Math.abs(av.traits[t] - (scores[t]||50));
+    if (s > bestScore) { bestScore = s; best = key; }
+  }
+  return best;
 }
 
-// ── UPLOAD ──
-function updateChar() {
-  const v = document.getElementById('upload-text').value;
-  document.getElementById('char-count').textContent = v.length;
+// ═══════════════════════════════════
+// QUICK TEST (5 questions)
+// ═══════════════════════════════════
+let qqCurrent = 0;
+const qqAnswers = {};
+
+function startQuickTest() {
+  qqCurrent = 0;
+  for (const k in qqAnswers) delete qqAnswers[k];
+  document.getElementById('affirmation-box').style.display = 'none';
+  renderQQ();
 }
 
-function selectTab(el) {
-  el.closest('.type-tabs').querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
+function renderQQ() {
+  const q = QUICK_QUESTIONS[qqCurrent];
+  const total = QUICK_QUESTIONS.length;
+  document.getElementById('qq-counter').textContent = `Question ${qqCurrent+1} of ${total}`;
+  document.getElementById('qq-pct').textContent = Math.round((qqCurrent+1)/total*100) + '% complete';
+  document.getElementById('qq-progress-bar').style.width = ((qqCurrent+1)/total*100) + '%';
+  document.getElementById('qq-number').textContent = `Question ${q.n} · Quick Reflection`;
+  document.getElementById('qq-text').textContent = q.text;
+  document.getElementById('qq-next-btn').textContent = qqCurrent === total-1 ? 'Reveal My Mirror ✦' : 'Next →';
+  document.getElementById('qq-scale-row').querySelectorAll('.scale-btn').forEach((btn,i) => {
+    btn.classList.toggle('selected', qqAnswers[qqCurrent] === i+1);
+  });
 }
 
-// ── AVATAR ──
-function selectAvatar(el) {
-  el.closest('.avatar-grid').querySelectorAll('.avatar-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
+function selectQQScale(btn) {
+  document.getElementById('qq-scale-row').querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  qqAnswers[qqCurrent] = parseInt(btn.textContent);
+}
+function nextQQ() {
+  if (qqCurrent < QUICK_QUESTIONS.length - 1) { qqCurrent++; renderQQ(); }
+  else finishQuickTest();
+}
+function prevQQ() { if (qqCurrent > 0) { qqCurrent--; renderQQ(); } }
+
+function finishQuickTest() {
+  const vals = Object.values(qqAnswers);
+  const avg = vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : 3;
+  let matched;
+  if (avg >= 4.2) matched = 'sage';
+  else if (avg >= 3.6) matched = 'nurturer';
+  else if (avg >= 3.0) matched = 'dreamer';
+  else if (avg >= 2.4) matched = 'flow';
+  else if (avg >= 1.8) matched = 'mystic';
+  else matched = 'spark';
+  const av = AVATARS[matched];
+  currentProfile = av;
+  currentAvatar = matched;
+  document.getElementById('affirmation-text').textContent = av.affirmation;
+  document.getElementById('quick-result-label').textContent = av.emoji + '  ' + av.mbti + ' · ' + av.name + ' · ' + av.dominant + ' ' + av.dominantPct + '%';
+  document.getElementById('affirmation-box').style.display = 'block';
+  document.getElementById('affirmation-box').scrollIntoView({behavior:'smooth'});
+  document.getElementById('sidebar-avatar-icon').textContent = av.emoji;
+  document.getElementById('sidebar-type-sub').textContent = av.mbti + ' · ' + av.name;
+  document.querySelectorAll('.avatar-card').forEach(c => c.classList.toggle('selected', c.dataset.avatar === matched));
+  applyBars(av.traits, 'db');
+  popIn('stat-type', av.mbti);
+  popIn('stat-dominant', av.dominant);
+  document.getElementById('stat-dominant-sub').textContent = av.dominantPct + '% score';
+  popIn('stat-consistency', av.consistency + '%');
+  document.getElementById('stat-consistency-sub').textContent = 'Profile consistency';
+  addToHistory({
+    type:'quick', icon:'⚡', badgeClass:'badge-quick-h', badgeLabel:'Quick Test',
+    title:'5-Min Mirror Check #' + (historyLog.length+1),
+    meta: nowTime() + ' · 5 questions · quick',
+    mbti: av.mbti, trait: av.dominant, traitPct: av.dominantPct
+  });
+  renderProfile(av);
 }
 
-// ── HISTORY FILTER ──
-let activeFilter = 'all';
+// ═══════════════════════════════════
+// JOURNAL ANALYSIS
+// ═══════════════════════════════════
+function updateJournalChar() {
+  const v = document.getElementById('journal-text').value;
+  document.getElementById('journal-char-count').textContent = v.length;
+  document.getElementById('journal-word-count').textContent = v.trim() ? v.trim().split(/\s+/).length : 0;
+}
+
+function analyseJournal() {
+  const text = document.getElementById('journal-text').value.trim();
+  if (text.length < 40) { showToast('✏️ Please write a bit more first — aim for 50+ words!'); return; }
+  const lower = text.toLowerCase();
+  const sc = {openness:50,conscientiousness:50,extraversion:50,agreeableness:50,neuroticism:50};
+  if (/wonder|imagine|dream|creat|art|beauty|explor|curious|discover|inspir|new|learn|read/.test(lower)) sc.openness += 22;
+  if (/plan|goal|work|focus|organis|accomplish|finish|deadline|schedule|responsib|complet/.test(lower)) sc.conscientiousness += 22;
+  if (/friend|party|talk|laugh|social|people|fun|energy|excit|crowd|meet|gather/.test(lower)) sc.extraversion += 22;
+  if (/alone|quiet|tired|exhaust|solitud|peace|rest|recharge|introvert/.test(lower)) sc.extraversion -= 15;
+  if (/care|help|kind|love|family|grateful|hug|support|understand|listen|compas/.test(lower)) sc.agreeableness += 22;
+  if (/anxious|worry|stress|fear|sad|overwhelm|cry|upset|nervous|fail|lost|mistak/.test(lower)) sc.neuroticism += 22;
+  if (/calm|peace|happy|joy|content|relax|grateful|fine|good|okay|bliss/.test(lower)) sc.neuroticism -= 12;
+  for (const k in sc) sc[k] = Math.min(97, Math.max(20, sc[k]));
+  const matched = matchAvatar(sc);
+  const av = AVATARS[matched];
+  const merged = {};
+  for (const k in av.traits) merged[k] = Math.round((av.traits[k] + sc[k]) / 2);
+  document.getElementById('jr-type').textContent = av.mbti;
+  document.getElementById('jr-trait').textContent = av.dominant + ' ' + (merged[av.dominant.toLowerCase()]||av.dominantPct) + '%';
+  document.getElementById('jr-insight').textContent = av.strength;
+  const res = document.getElementById('journal-result');
+  res.style.display = 'block';
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth'});
+  window._pendingJournal = {...av, traits: merged};
+}
+
+function saveJournalAndGoToProfile() {
+  const av = window._pendingJournal;
+  if (!av) return;
+  currentProfile = av;
+  currentAvatar = Object.keys(AVATARS).find(k => AVATARS[k].mbti === av.mbti) || 'sage';
+  const words = document.getElementById('journal-word-count').textContent;
+  addToHistory({
+    type:'journal', icon:'📓', badgeClass:'badge-text-h', badgeLabel:'Journal',
+    title:'Journal Entry #' + (historyLog.length+1),
+    meta: nowTime() + ' · ' + words + ' words · journal',
+    mbti: av.mbti, trait: av.dominant, traitPct: av.traits[av.dominant.toLowerCase()]||av.dominantPct
+  });
+  document.getElementById('journal-text').value = '';
+  document.getElementById('journal-char-count').textContent = '0';
+  document.getElementById('journal-word-count').textContent = '0';
+  document.getElementById('journal-result').style.display = 'none';
+  document.getElementById('journal-result').classList.remove('show');
+  document.getElementById('sidebar-avatar-icon').textContent = av.emoji;
+  document.getElementById('sidebar-type-sub').textContent = av.mbti + ' · ' + av.name;
+  document.querySelectorAll('.avatar-card').forEach(c => c.classList.toggle('selected', c.dataset.avatar === currentAvatar));
+  applyBars(av.traits, 'db');
+  popIn('stat-type', av.mbti);
+  popIn('stat-dominant', av.dominant);
+  document.getElementById('stat-dominant-sub').textContent = (av.traits[av.dominant.toLowerCase()]||av.dominantPct) + '% score';
+  popIn('stat-consistency', av.consistency + '%');
+  document.getElementById('stat-consistency-sub').textContent = 'Profile consistency';
+  renderJournalHistory();
+  renderProfile(av);
+  navigate('profile');
+}
+
+function renderJournalHistory() {
+  const container = document.getElementById('journal-history-list');
+  const entries = historyLog.filter(h => h.type === 'journal');
+  if (!entries.length) {
+    container.innerHTML = '<div class="empty-state"><div>📓</div>No journal entries yet — write your first one above!</div>';
+    return;
+  }
+  container.innerHTML = entries.map(e => `
+    <div class="h-card" data-type="journal">
+      <div class="h-icon-wrap h-journal">📓</div>
+      <div><div class="h-badge badge-text-h">Journal</div><div class="h-title">${e.title}</div><div class="h-meta">${e.meta}</div></div>
+      <div class="h-result"><div class="h-type" style="color:var(--accent3)">${e.mbti}</div><div class="h-score">${e.traitPct}% ${e.trait}</div></div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════
+// PROFILE RENDER
+// ═══════════════════════════════════
+function renderProfile(av) {
+  document.getElementById('profile-emoji').textContent = av.emoji;
+  document.getElementById('profile-type').textContent = av.mbti;
+  document.getElementById('profile-label').textContent = av.mbtiLabel;
+  document.getElementById('profile-strength').textContent = av.strength;
+  document.getElementById('profile-growth').textContent = av.growth;
+  document.getElementById('profile-career').textContent = av.career;
+  document.getElementById('profile-tags').innerHTML = av.tags.map(t=>`<span class="hero-tag">${t}</span>`).join('');
+  applyBars(av.traits, 'p');
+}
+
+// ═══════════════════════════════════
+// HISTORY
+// ═══════════════════════════════════
+function addToHistory(entry) {
+  entry.date = new Date();
+  historyLog.unshift(entry);
+  renderHistory();
+  renderDashboardRecent();
+}
+
+function renderHistory() {
+  const container = document.getElementById('timeline');
+  const filtered = historyLog.filter(e => {
+    const mt = activeFilter === 'all' || e.type === activeFilter;
+    const ms = !currentSearch || JSON.stringify(e).toLowerCase().includes(currentSearch);
+    return mt && ms;
+  });
+  if (!filtered.length) {
+    container.innerHTML = '<div class="empty-state"><div>◷</div>No analyses match this filter!</div>';
+    return;
+  }
+  const typeColor = {quiz:'var(--accent)',journal:'var(--accent3)',quick:'var(--accent2)'};
+  const iconClass = {quiz:'h-quiz',journal:'h-journal',quick:'h-quick'};
+  container.innerHTML = filtered.map(e => `
+    <div class="h-card" data-type="${e.type}">
+      <div class="h-icon-wrap ${iconClass[e.type]||'h-quiz'}">${e.icon}</div>
+      <div>
+        <div class="h-badge ${e.badgeClass}">${e.badgeLabel}</div>
+        <div class="h-title">${e.title}</div>
+        <div class="h-meta">${e.meta}</div>
+      </div>
+      <div class="h-result">
+        <div class="h-type" style="color:${typeColor[e.type]||'var(--accent)'}">${e.mbti}</div>
+        <div class="h-score">${e.traitPct}% ${e.trait}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderDashboardRecent() {
+  const grid = document.getElementById('dash-recent-grid');
+  const recent = historyLog.slice(0,3);
+  if (!recent.length) {
+    grid.innerHTML = '<div style="color:var(--muted);font-size:13px;grid-column:1/-1;padding:20px 0;text-align:center">No analyses yet — take a quiz, quick check, or write a journal entry ✦</div>';
+    return;
+  }
+  const badgeMap = {quiz:'badge-quiz',journal:'badge-text',quick:'badge-quick'};
+  grid.innerHTML = recent.map(e => `
+    <div class="recent-card" onclick="navigate('history')">
+      <div class="recent-top"><span class="recent-icon">${e.icon}</span><span class="recent-badge ${badgeMap[e.type]||'badge-quiz'}">${e.badgeLabel}</span></div>
+      <div class="recent-title">${e.title}</div>
+      <div class="recent-meta">${e.meta.split('·')[0].trim()} · ${e.mbti} · ${e.traitPct}% ${e.trait}</div>
+    </div>`).join('');
+  popIn('stat-analyses', historyLog.length);
+  const thisWeek = historyLog.filter(e => (new Date() - e.date) < 7*864e5).length;
+  document.getElementById('stat-analyses-sub').textContent = '↑ ' + thisWeek + ' this week';
+}
+
 function filterHistory(btn, type) {
   activeFilter = type;
   btn.closest('.filter-row').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  applyHistoryFilter();
+  renderHistory();
+}
+function searchHistory(val) { currentSearch = val.toLowerCase(); renderHistory(); }
+
+function nowTime() {
+  return new Date().toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
 }
 
-function searchHistory(val) { applyHistoryFilter(val); }
-
-function applyHistoryFilter(search) {
-  const q = (search || '').toLowerCase();
-  document.querySelectorAll('#timeline .h-card').forEach(card => {
-    const matchType = activeFilter === 'all' || card.dataset.type === activeFilter;
-    const matchSearch = !q || card.textContent.toLowerCase().includes(q);
-    card.style.display = matchType && matchSearch ? '' : 'none';
-  });
-}
+// INIT
+startQuiz();
 </script>
 </body>
 </html>
