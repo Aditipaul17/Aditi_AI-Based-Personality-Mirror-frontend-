@@ -1,0 +1,68 @@
+# ─────────────────────────────────────────────────────────────
+# Deploy Mirror.ai frontend to GitHub Pages
+#
+# Trigger : every push to the main branch
+# What it does:
+#   1. Checks out the repo & installs backend deps
+#   2. Uploads mirror-ai/frontend/ as a Pages artifact
+#   3. Deploys the artifact to GitHub Pages
+#
+# Prerequisites:
+#   Repo Settings → Pages → Source → "GitHub Actions"
+# ─────────────────────────────────────────────────────────────
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+# Grant GITHUB_TOKEN the permissions needed for Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only allow one deployment at a time; cancel in-progress runs
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # ── Job 1: Build & upload artifact ──────────────────────────
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install backend dependencies
+        working-directory: ./mirror-ai
+        run: npm install
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: "./mirror-ai/frontend"
+
+  # ── Job 2: Deploy to GitHub Pages ──────────────────────────
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
