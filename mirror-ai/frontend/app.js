@@ -8,7 +8,7 @@ function MirrorAI() {
 
   function handleAuth(user) {
     setCurrentUser(user);
-    history.replaceState(null, "", "/");
+    history.replaceState(null, "", "./");
     setPage("dashboard");
   }
 
@@ -18,7 +18,7 @@ function MirrorAI() {
     setCurrentProfile(null);
     setBfsResult(null);
     setHistoryLog([]);
-    history.replaceState(null, "", "/");
+    history.replaceState(null, "", "./");
   }
 
   // Support deep-linking via URL hash (e.g. /#quiz, /#profile).
@@ -58,7 +58,7 @@ function MirrorAI() {
     setPage(p);
     // Keep the browser URL hash in sync so bookmarking and the
     // back-button work correctly without a server round-trip.
-    history.replaceState(null, "", p === "dashboard" ? "/" : "#" + p);
+    history.replaceState(null, "", p === "dashboard" ? "./" : "#" + p);
     if (p === "quiz") { setCurrentQ(0); setQuizAnswers({}); }
     if (p === "quicktest") { setQqCurrent(0); setQqAnswers({}); setShowAffirmation(false); setQuickResult(null); }
   }

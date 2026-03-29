@@ -61,29 +61,6 @@ PORT=8080 npm start
 
 ---
 
-## Architecture Notes
-
-### Why it is still a Single-Page Application
-
-The original code uses React `useState` for all navigation — there is no
-URL router and no server-rendered pages. Every "page" is a React component
-rendered conditionally by the root `MirrorAI` component based on a `page`
-state string.
-
-Truly isolating each page into its own HTML document would require lifting
-all shared state (`currentAvatar`, `historyLog`, `bfsResult`, …) out of
-React and into `localStorage` or a backend API, which would change the logic.
-The constraint says don't change the logic, so the SPA is preserved.
-
-### What the split actually achieves
-
-| Before | After |
-|--------|-------|
-| 1 monolithic HTML file | 10 focused JS files + 1 HTML shell |
-| All logic, data, and UI in one `<script>` | Clear separation of concerns |
-| No backend | Express serves all assets |
-| Direct-URL navigation broken | Deep-link redirect via URL hash |
-| Browser back-button ignored | `hashchange` listener syncs state |
 
 ### Script load order in `index.html`
 
