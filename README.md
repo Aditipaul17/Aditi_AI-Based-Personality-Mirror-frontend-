@@ -1,6 +1,7 @@
 # Mirror.ai — Project Structure
 
- Live Demo: [Aditi AI-Based Personality Mirror](https://aditipaul17.github.io/Aditi_AI-Based-Personality-Mirror-frontend-/)
+ **Live Demo:** Experience the AI-Based Personality Mirror in action here → [Aditi_AI-Based-Personality-Mirror](https://aditipaul17.github.io/Aditi_AI-Based-Personality-Mirror-/)
+
 
 ## Folder Layout
 
