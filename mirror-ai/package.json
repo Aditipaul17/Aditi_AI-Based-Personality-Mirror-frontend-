@@ -1,0 +1,12 @@
+{
+  "name": "mirror-ai",
+  "version": "1.0.0",
+  "description": "Mirror.ai personality app — backend server",
+  "main": "backend/app.js",
+  "scripts": {
+    "start": "node backend/app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

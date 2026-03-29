@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mirror.ai</title>
+  <script>
+    // Deep-link redirect: send the visitor to the SPA root with a hash
+    // so the app can navigate to the correct page on load.
+    var page = location.pathname.replace(/^\//, '').replace(/\.html$/, '');
+    window.location.replace('/#' + page);
+  </script>
+</head>
+<body></body>
+</html>

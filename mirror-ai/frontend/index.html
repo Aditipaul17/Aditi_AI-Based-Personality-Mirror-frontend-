@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mirror.ai</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!--
+    Load order matters — each file depends on the ones above it:
+      1. data.js       → BFS engine, AVATARS, QUIZ_QUESTIONS, QUICK_QUESTIONS, S (styles), css
+      2. components.js → TraitBar, ScaleBtn, BFSVisualiser, Sidebar  (use S, AVATARS, BFS fns)
+      3. auth.js       → PageAuth  (uses S — rendered before the main SPA)
+      4. dashboard.js  → PageDashboard   (uses TraitBar, BFSVisualiser, S, TRAITS, AVATARS)
+      5. quiz.js       → PageQuiz        (uses ScaleBtn, S, QUIZ_QUESTIONS)
+      6. quicktest.js  → PageQuickTest   (uses ScaleBtn, S, QUICK_QUESTIONS)
+      7. journal.js    → PageJournal     (uses BFSVisualiser, S)
+      8. profile.js    → PageProfile     (uses TraitBar, BFSVisualiser, S, TRAITS)
+      9. history.js    → PageHistory     (uses S)
+     10. coming.js     → PageComing      (uses S)
+     11. app.js        → MirrorAI root   (assembles everything, mounts to #root)
+  -->
+  <script type="text/babel" src="/data.js"></script>
+  <script type="text/babel" src="/components.js"></script>
+  <script type="text/babel" src="/auth.js"></script>
+  <script type="text/babel" src="/dashboard.js"></script>
+  <script type="text/babel" src="/quiz.js"></script>
+  <script type="text/babel" src="/quicktest.js"></script>
+  <script type="text/babel" src="/journal.js"></script>
+  <script type="text/babel" src="/profile.js"></script>
+  <script type="text/babel" src="/history.js"></script>
+  <script type="text/babel" src="/coming.js"></script>
+  <script type="text/babel" src="/app.js"></script>
+</body>
+</html>
